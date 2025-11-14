@@ -1,0 +1,134 @@
+<header class="w-100 d-flex justify-content-center position-sticky top-0" style="background: var(--white); z-index: 1000;">
+  <nav class="container-header navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand fs-2 fw-bold text-green" routerLink="/home">EcoVibe</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+        <ul class="navbar-nav gap-0 gap-lg-4">
+          <li class="nav-item d-flex align-items-center gap-2">
+            <div class="dropdown">
+              <span class="dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Servicios
+              </span>
+              <ul class="dropdown-menu mt-2 shadow-lg dropdown-menu--header__services">
+                <li id="calculatorService"><a class="dropdown-item" routerLink="calculadora/calculadora-personal" style="white-space: pre-wrap;">Calculadora de huella de carbono</a></li>
+                <li id="activeService"><a class="dropdown-item" routerLink="actividades/crear-actividad"
+                                          style="white-space: pre-wrap;">Registro de actividades diarias</a></li>
+                <li><a class="dropdown-item" routerLink="/tienda" style="white-space: pre-wrap;">Tienda</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Rankings</a>
+          </li>
+          <li class="nav-item position-relative d-flex align-items-center form-control--header__search">
+            <div class="position-absolute">
+              <i class="ms-2 fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input class="form-control form-control-sm" style="padding-left: 32px;" type="search" placeholder="Buscar"
+                   aria-label="Search">
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="d-block btn btn-success" id="isLoggedIn">Iniciar sesión</button>
+          <div class="d-flex flex-column flex-lg-row align-items-center gap-4" id="isNotLoggedIn">
+            <a class="d-flex align-items-center gap-2 nav-link w-100" href="#">
+              <i class="fas fa-bell"></i>
+              <span class="fs-6 d-lg-none">Notificaciones</span>
+            </a>
+            <a class="d-flex align-items-center gap-2 nav-link w-100" routerLink="/tienda">
+              <i class="fas fa-dollar-sign"></i>
+              <span class="fs-6 d-lg-none">Tienda</span>
+            </a>
+            <div class="nav-item dropdown d-none d-lg-block">
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow-lg mt-3">
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="#" id="closeSesionDesktop">Cerrar sesión</a></li>
+              </ul>
+            </div>
+            <div class="d-flex flex-column gap-3 d-lg-none w-100">
+              <a class="nav-link" href="#">
+                <i class="fas fa-user"></i>
+                <span class="fs-6">Perfil</span>
+              </a>
+              <button type="button" class="btn btn-sm btn-danger mb-2" id="closeSesionMobile">Cerrar sesión</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="position-absolute close-confetti" style="z-index: 2000;">
+  <canvas id="my-canvas"></canvas>
+</div>
+
+<main class="container">
+
+  <div *ngIf="!isLoading && reporte; else loadingTemplate">
+    <div class="w-full">
+      <h2 class="text-center color-green fs-2 fw-bold my-4">Registro de actividades diarias</h2>
+      <p class="text-center fs-5 mt-4">Para calcular la huella de carbono</p>
+      <div class="flex items-center justify-center gap-2">
+        <i class="fas fa-check-circle fs-1"></i>
+        <span class="fs-5">Datos registrados</span>
+      </div>
+
+      <span *ngIf="puntosGanados > 0" class="d-flex justify-content-center w-100 fs-6 text-center color-secondary">
+        +{{ puntosGanados }} POINTS
+      </span>
+
+    </div>
+    <h3 class="my-6 fs-4 fw-bold">Resultados de hoy :</h3>
+
+    <div class="container-chart mb-4">
+      <div class="container-canva">
+        <canvas id="myChart" #myChartCanvas></canvas>
+      </div>
+      <div class="container-description">
+
+        <p class="fs-2">El total de emisiones netas es de {{ reporte.totalKgCO2e | number:'1.2-2' }} kg de CO₂, considerando las siguientes categorías:</p>
+
+        <div class="flex flex-col gap-4 mt-4">
+          <div class="flex items-center gap-2">
+            <div class="slot-color bg-01"></div>
+            <span class="fs-6 fw-medium">Transporte: {{ reporte.transporteKgCO2e | number:'1.2-2' }} kg</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="slot-color bg-02"></div>
+            <span class="fs-6 fw-medium">Energía: {{ reporte.energiaKgCO2e | number:'1.2-2' }} kg</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="slot-color bg-03"></div>
+            <span class="fs-6 fw-medium">Consumo: {{ reporte.residuosKgCO2e | number:'1.2-2' }} kg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center my-4">
+      <button class="btn btn-success px-4" (click)="goHome()">
+        <i class="fa-solid fa-house me-2"></i> Volver al inicio
+      </button>
+    </div>
+
+  </div>
+
+  <ng-template #loadingTemplate>
+    <div class="text-center" style="padding: 150px 0; text-align: center;">
+      <h2 class="fs-3">Calculando tus resultados...</h2>
+      <p class="fs-5">Esto tomará solo un segundo.</p>
+      <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-template>
+
+</main>

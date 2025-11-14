@@ -1,0 +1,144 @@
+<header class="w-100 d-flex justify-content-center position-sticky top-0" style="background: var(--white); z-index: 1000;">
+  <nav class="container-header navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand fs-2 fw-bold text-green" routerLink="/home">EcoVibe</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+        <ul class="navbar-nav gap-0 gap-lg-4">
+          <li class="nav-item d-flex align-items-center gap-2">
+            <div class="dropdown">
+              <span class="dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Servicios
+              </span>
+              <ul class="dropdown-menu mt-2 shadow-lg dropdown-menu--header__services">
+                <li id="calculatorService"><a class="dropdown-item" routerLink="calculadora/calculadora-personal" style="white-space: pre-wrap;">Calculadora de huella de carbono</a></li>
+                <li id="activeService"><a class="dropdown-item" routerLink="actividades/crear-actividad"
+                                          style="white-space: pre-wrap;">Registro de actividades diarias</a></li>
+                <li><a class="dropdown-item" routerLink="/pages/tienda" style="white-space: pre-wrap;">Tienda</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Rankings</a>
+          </li>
+          <li class="nav-item position-relative d-flex align-items-center form-control--header__search">
+            <div class="position-absolute">
+              <i class="ms-2 fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input class="form-control form-control-sm" style="padding-left: 32px;" type="search" placeholder="Buscar"
+                   aria-label="Search">
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="d-block btn btn-success" id="isLoggedIn">Iniciar sesión</button>
+          <div class="d-flex flex-column flex-lg-row align-items-center gap-4" id="isNotLoggedIn">
+            <a class="d-flex align-items-center gap-2 nav-link w-100" href="#">
+              <i class="fas fa-bell"></i>
+              <span class="fs-6 d-lg-none">Notificaciones</span>
+            </a>
+            <a class="d-flex align-items-center gap-2 nav-link w-100" routerLink="/pages/tienda">
+              <i class="fas fa-dollar-sign"></i>
+              <span class="fs-6 d-lg-none">Tienda</span>
+            </a>
+            <div class="nav-item dropdown d-none d-lg-block">
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow-lg mt-3">
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="#" id="closeSesionDesktop">Cerrar sesión</a></li>
+              </ul>
+            </div>
+            <div class="d-flex flex-column gap-3 d-lg-none w-100">
+              <a class="nav-link" href="#">
+                <i class="fas fa-user"></i>
+                <span class="fs-6">Perfil</span>
+              </a>
+              <button type="button" class="btn btn-sm btn-danger mb-2" id="closeSesionMobile">Cerrar sesión</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="container">
+  <h1 class="text-center color-green fs-2 fw-bold my-4">Registro de actividades diarias</h1>
+
+  <form class="form-container" (ngSubmit)="onSubmit()" #energiaForm="ngForm">
+    <h2 class="fs-3 text-center">2. Energía</h2>
+
+    <div class="form-section">
+      <label for="electricity" class="fs-6">1. ¿Cuánto consumo eléctrico has tenido hoy (en kWh)?</label>
+      <div class="input-group d-flex align-items-center gap-3 mt-3">
+        <i class="fa-solid fa-bolt fs-1"></i>
+        <input type="number" id="electricity" name="electricity" class="form-control"
+               placeholder="Introduce el consumo en kWh"
+               [(ngModel)]="formData.electricity"
+               min="0"
+               #electricityInput="ngModel">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label class="fs-6">2. ¿Utilizaste calefacción o aire acondicionado hoy?</label>
+      <div class="checkbox-group">
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="yes" name="heating"
+                 [(ngModel)]="formData.heating"> Sí
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="no" name="heating"
+                 [(ngModel)]="formData.heating"> No
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label for="heatingTime" class="fs-6">Si usaste calefacción/aire acondicionado, ¿cuánto tiempo lo tuviste encendido (en horas)?</label>
+      <div class="input-group d-flex align-items-center gap-3 mt-3">
+        <i class="fa-solid fa-clock fs-1"></i>
+        <input type="number" id="heatingTime" name="heatingTime" class="form-control"
+               placeholder="Introduce el tiempo en horas"
+               [(ngModel)]="formData.heatingTime"
+               [disabled]="formData.heating !== 'yes'"
+               min="0">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label class="fs-6">3. Tiempo de uso de dispositivos electrónicos hoy (computadora, TV, consola, etc.):</label>
+      <div class="checkbox-group">
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="less2" name="electronics"
+                 [(ngModel)]="formData.electronics" required> Menos de 2 horas
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="2to4" name="electronics"
+                 [(ngModel)]="formData.electronics" required> 2-4 horas
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="more4" name="electronics"
+                 [(ngModel)]="formData.electronics" required> Más de 4 horas
+        </label>
+      </div>
+    </div>
+
+    <div class="content_button d-flex justify-content-between mt-4">
+      <div class="submit-button">
+        <button type="button" (click)="goBack()" class="btn btn-outline-success">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+      <div class="submit-button">
+        <button type="submit" class="btn btn-success" [disabled]="!energiaForm.form.valid">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</main>

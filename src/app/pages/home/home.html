@@ -1,0 +1,190 @@
+<header class="w-100 d-flex justify-content-center position-sticky top-0" style="background: var(--gradient); z-index: 1000;">
+  <nav class="container-header navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand fs-2 fw-bold text-green" href="/">EcoVibe</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+        <ul class="navbar-nav gap-0 gap-lg-4">
+          <li class="nav-item d-flex align-items-center gap-2">
+            <div class="dropdown">
+              <span class="dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Servicios
+              </span>
+              <ul class="dropdown-menu mt-2 shadow-lg dropdown-menu--header__services">
+                <li id="calculatorService"><a class="dropdown-item" routerLink="/calculadora/calculadora-personal" style="white-space: pre-wrap;">Calculadora de huella de carbono</a></li>
+                <li id="activeService"><a class="dropdown-item" routerLink="/actividades/crear-actividad" style="white-space: pre-wrap;">Registro de actividades diarias</a></li>
+                <li><a class="dropdown-item" routerLink="/tienda" style="white-space: pre-wrap;">Tienda</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Rankings</a>
+          </li>
+          <li class="nav-item position-relative d-flex align-items-center form-control--header__search">
+            <div class="position-absolute">
+              <i class="ms-2 fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input class="form-control form-control-sm" style="padding-left: 32px;" type="search" placeholder="Buscar" aria-label="Search">
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="d-block btn btn-success" id="isLoggedIn">Iniciar sesión</button>
+          <div class="d-flex flex-column flex-lg-row align-items-center gap-4" id="isNotLoggedIn">
+            <a class="d-flex align-items-center gap-2 nav-link w-100" href="#">
+              <i class="fas fa-bell"></i>
+              <span class="fs-6 d-lg-none">Notificaciones</span>
+            </a>
+            <a class="d-flex align-items-center gap-2 nav-link w-100" href="/tienda">
+              <i class="fas fa-dollar-sign"></i>
+              <span class="fs-6 d-lg-none">Tienda</span>
+            </a>
+            <div class="nav-item dropdown d-none d-lg-block">
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow-lg mt-3">
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="#" id="closeSesionDesktop">Cerrar sesión</a></li>
+              </ul>
+            </div>
+            <div class="d-flex flex-column gap-3 d-lg-none w-100">
+              <a class="nav-link" href="#">
+                <i class="fas fa-user"></i>
+                <span class="fs-6">Perfil</span>
+              </a>
+              <button type="button" class="btn btn-sm btn-danger mb-2" id="closeSesionMobile">Cerrar sesión</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <script src="./js/header.js"></script>
+</header>
+
+<main class="w-full">
+  <div class="w-full overflow-hidden" style="background: var(--gradient);">
+    <section class="container hero-banner">
+      <div class="hero-description">
+        <h1 class="fs-2 fw-bold text-secondary">Calcula tu huella de carbono, comprometete a reducirla</h1>
+        <a class="btn btn-lg btn-light fs-6" routerLink="/calculadora/calculadora-personal">Mide tu huella de carbono</a>
+      </div>
+      <img class="w-full planet" src="assets/imagenes/planeta.png" />
+    </section>
+  </div>
+  <section class="container banner_how">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <h2 class="fs-2 fw-bold text-green mb-3">¿Cómo funciona EcoVibe?</h2>
+        <p class="fs-5 text-secondary mb-3">Gana puntos por cada actividad sostenible que registres. Compite en el ranking mensual, canjea tus puntos en nuestra tienda y aprende con nuestros recursos educativos.</p>
+        <p class="fs-5 text-secondary">Tu racha de registros te dará bonificaciones. ¡Cada acción cuenta!</p>
+        <div class="d-flex gap-3 mt-4">
+          <a class="btn btn-lg btn-success text-white d-inline-flex align-items-center gap-2 py-3 px-4" routerLink="/actividades/crear-actividad">
+            Registra tu actividad
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a class="btn btn-lg btn-outline-success d-inline-flex align-items-center gap-2 py-3 px-4" routerLink="/tienda">
+            Ir a la tienda
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center">
+        <img src="assets/imagenes/hoja.jpg" alt="Persona reciclando" class="img-fluid rounded shadow-lg img-how">
+      </div>
+    </div>
+  </section>
+
+  <section class="container banner_ranking bg-light py-5">
+    <h2 class="fs-1 fw-bold text-center text-dark">Ranking Mensual de Sostenibilidad</h2>
+    <p class="fs-5 text-center text-secondary mb-5">¡Compite con tus amigos y con tu distrito por los primeros lugares!</p>
+
+    <div class="banner_ranking_content">
+      <div class="podium">
+        <div class="podium_content">
+          <div class="circle overflow-hidden"><img class="w-100 object-fit-cover" src="assets/img/jeyson.jpg" alt="jeyson"></div>
+          <div class="podium-item podium-item-3"><div class="fs-6">#3</div><div class="fs-6">Jeyson Orellano</div></div>
+        </div>
+        <div class="podium_content">
+          <div class="circle overflow-hidden"><img class="w-100 object-fit-cover" src="assets/img/juan.jpeg" alt="juan"></div>
+          <div class="podium-item podium-item-1"><div class="fs-6">#1</div><div class="fs-6">Juan Torres</div></div>
+        </div>
+        <div class="podium_content">
+          <div class="circle overflow-hidden"><img class="w-100 object-fit-cover" src="assets/img/fernando.jpeg" alt="Fernando"></div>
+          <div class="podium-item podium-item-2"><div class="fs-6">#2</div><div class="fs-6">Fernando Ortiz</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container banner_resources py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 text-center">
+        <img src="assets/imagenes/recursos-educativos.jpg" alt="Recursos Educativos" class="img-fluid rounded shadow-lg">
+      </div>
+      <div class="col-lg-6">
+        <h2 class="fs-2 fw-bold text-green mb-3">Recursos Educativos</h2>
+        <p class="fs-5 text-secondary mb-4">El conocimiento es el primer paso para el cambio. Explora nuestra biblioteca de artículos, videos y guías para aprender cómo puedes reducir tu impacto ambiental de forma efectiva.</p>
+        <a class="btn btn-lg btn-success text-white d-inline-flex align-items-center gap-2 py-3 px-4" routerLink="/recursoeducativo">
+          Explorar Recursos
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mission-vision-section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card h-100 p-4">
+            <h2 class="font-title-lg text-dark">Misión</h2>
+            <p class="font-text-sm-bold">Educar y fomentar un comportamiento ecológico responsable permitiendo a los usuarios medir, monitorear y reducir su huella de carbono. Buscamos generar un cambio positivo y crear una comunidad comprometida con la mitigación del cambio climático.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100 p-4">
+            <h2 class="font-title-lg text-dark">Visión</h2>
+            <p class="font-text-sm-bold">Ser la plataforma digital más influyente y accesible para ayudar a las personas a sensibilizarse sobre su impacto ambiental. Nuestra visión incluye dar soporte global e integrar servicios para empresas y gobiernos, ayudando en la toma de decisiones y políticas sostenibles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="flex flex-col items-center bg-green">
+  <div class="footer-home">
+    <div class="logo">
+      <h2>EcoVibe</h2>
+    </div>
+    <div class="services">
+      <h3>Servicios</h3>
+      <ul>
+        <li><a routerLink="/calculadora-personal">Calculadora de huella</a></li>
+        <li><a routerLink="/actividades/crear-actividad">Registro de actividades</a></li>
+        <li><a routerLink="/ranking">Ranking de usuarios</a></li>
+        <li><a routerLink="/tienda">Tienda</a></li>
+        <li><a routerLink="/recursos">Recursos Educativos</a></li>
+      </ul>
+    </div>
+    <div class="about-ecovibe">
+      <h3>Sobre EcoVibe</h3>
+      <ul>
+        <li><a href="#">¿Por qué EcoVibe?</a></li>
+        <li><a href="#">¿Cómo funciona?</a></li>
+        <li><a href="#">Términos y condiciones</a></li>
+      </ul>
+    </div>
+    <div class="social-media">
+      <h3>Nuestras redes sociales:</h3>
+      <ul class="social-media--container">
+        <li><a href="https://www.facebook.com/" target="_blank" rel="noopener"><i class="fab fa-facebook"></i></a></li>
+        <li><a href="https://instagram.com/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a></li>
+        <li><a href="https://linkedin.com/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a></li>
+        <li><a href="https://www.youtube.com/" target="_blank" rel="noopener"><i class="fab fa-youtube"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

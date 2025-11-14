@@ -1,0 +1,161 @@
+<header class="w-100 d-flex justify-content-center position-sticky top-0" style="background: var(--white); z-index: 1000;">
+  <nav class="container-header navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand fs-2 fw-bold text-green" routerLink="/home">EcoVibe</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+        <ul class="navbar-nav gap-0 gap-lg-4">
+          <li class="nav-item d-flex align-items-center gap-2">
+            <div class="dropdown">
+              <span class="dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Servicios
+              </span>
+              <ul class="dropdown-menu mt-2 shadow-lg dropdown-menu--header__services">
+                <li id="calculatorService"><a class="dropdown-item" routerLink="calculadora/calculadora-personal" style="white-space: pre-wrap;">Calculadora de huella de carbono</a></li>
+                <li id="activeService"><a class="dropdown-item" routerLink="actividades/crear-actividad"
+                                          style="white-space: pre-wrap;">Registro de actividades diarias</a></li>
+                <li><a class="dropdown-item" routerLink="/pages/tienda" style="white-space: pre-wrap;">Tienda</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Rankings</a>
+          </li>
+          <li class="nav-item position-relative d-flex align-items-center form-control--header__search">
+            <div class="position-absolute">
+              <i class="ms-2 fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input class="form-control form-control-sm" style="padding-left: 32px;" type="search" placeholder="Buscar"
+                   aria-label="Search">
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="d-block btn btn-success" id="isLoggedIn">Iniciar sesión</button>
+          <div class="d-flex flex-column flex-lg-row align-items-center gap-4" id="isNotLoggedIn">
+            <a class="d-flex align-items-center gap-2 nav-link w-100" href="#">
+              <i class="fas fa-bell"></i>
+              <span class="fs-6 d-lg-none">Notificaciones</span>
+            </a>
+            <a class="d-flex align-items-center gap-2 nav-link w-100" routerLink="/pages/tienda">
+              <i class="fas fa-dollar-sign"></i>
+              <span class="fs-6 d-lg-none">Tienda</span>
+            </a>
+            <div class="nav-item dropdown d-none d-lg-block">
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow-lg mt-3">
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="#" id="closeSesionDesktop">Cerrar sesión</a></li>
+              </ul>
+            </div>
+            <div class="d-flex flex-column gap-3 d-lg-none w-100">
+              <a class="nav-link" href="#">
+                <i class="fas fa-user"></i>
+                <span class="fs-6">Perfil</span>
+              </a>
+              <button type="button" class="btn btn-sm btn-danger mb-2" id="closeSesionMobile">Cerrar sesión</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="container">
+  <h1 class="text-center color-green fs-2 fw-bold my-4">Registro de actividades diarias</h1>
+
+  <form class="form-container" (ngSubmit)="onSubmit()" #transporteForm="ngForm">
+
+    <div class="form-section">
+      <h2 class="fs-3 text-center">1. Transporte</h2>
+      <p class="fs-6">1. ¿Qué medio de transporte usaste hoy? (Selecciona todas las que utilizaste)</p>
+
+      <div class="checkbox-group">
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="auto_check" [(ngModel)]="mediosSeleccionados.auto"> Auto propio
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="moto_check" [(ngModel)]="mediosSeleccionados.moto"> Moto
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="public_check" [(ngModel)]="mediosSeleccionados.public"> Transporte público
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="bike_check" [(ngModel)]="mediosSeleccionados.bike"> Bicicleta
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="walk_check" [(ngModel)]="mediosSeleccionados.walk"> A pie
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="checkbox" name="plane_check" [(ngModel)]="mediosSeleccionados.plane"> Avión
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label for="distance" class="fs-6 mb-4">Si usaste auto o moto, introduce la distancia total recorrida (en km):</label>
+      <div class="input-group d-flex align-items-center gap-3">
+        <i class="fa-solid fa-car fs-1"></i>
+        <input type="number" id="distance" name="distance" class="form-control" placeholder="Distancia en km"
+               [(ngModel)]="formData.distance"
+               [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"
+               min="0"> </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="font-subtitle-lg text-center">Tipo de combustible de tu vehículo:</h2>
+      <div class="checkbox-group" [class.disabled-group]="!mediosSeleccionados.auto && !mediosSeleccionados.moto">
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="gasoline" name="fuel" [(ngModel)]="formData.fuel" [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"> Gasolina
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="diesel" name="fuel" [(ngModel)]="formData.fuel" [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"> Diésel
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="electric" name="fuel" [(ngModel)]="formData.fuel" [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"> Eléctrico
+        </label>
+        <label class="fs-6 d-flex align-items-center gap-2">
+          <input class="form-check-input" type="radio" value="hybrid" name="fuel" [(ngModel)]="formData.fuel" [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"> Híbrido
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label for="fuelConsumption" class="fs-6 mb-4">Consumo de combustible de tu vehículo (en L/100 km):</label>
+      <div class="input-group d-flex align-items-center gap-3">
+        <i class="fa-solid fa-gas-pump fs-1"></i>
+        <input type="number" id="fuelConsumption" name="fuelConsumption" class="form-control"
+               placeholder="Litros por 100 km" [(ngModel)]="formData.fuelConsumption"
+               [disabled]="!mediosSeleccionados.auto && !mediosSeleccionados.moto"
+               min="0"> </div>
+    </div>
+
+    <div class="form-section">
+      <label for="flightDistance" class="fs-6 mb-4">Si viajaste en avión, ¿cuántos kilómetros volaste?:</label>
+      <div class="input-group d-flex align-items-center gap-3">
+        <i class="fa-solid fa-plane fs-1"></i>
+        <input type="number" id="flightDistance" name="flightDistance" class="form-control"
+               placeholder="Kilómetros volados" [(ngModel)]="formData.flightDistance"
+               [disabled]="!mediosSeleccionados.plane"
+               min="0"> </div>
+    </div>
+
+    <div class="content_button d-flex justify-content-between mt-4">
+      <div class="submit-button">
+        <button type="button" (click)="goBack()" class="btn btn-outline-success">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+      <div class="submit-button">
+        <button type="submit" class="btn btn-success" [disabled]="!transporteForm.form.valid">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</main>

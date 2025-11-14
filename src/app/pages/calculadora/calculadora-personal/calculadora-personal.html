@@ -1,0 +1,280 @@
+<header class="w-100 d-flex justify-content-center position-sticky top-0" style="background: var(--white); z-index: 1000;">
+  <nav class="container-header navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand fs-2 fw-bold text-green" routerLink="/home">EcoVibe</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+        <ul class="navbar-nav gap-0 gap-lg-4">
+          <li class="nav-item d-flex align-items-center gap-2">
+            <div class="dropdown">
+              <span class="dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Servicios
+              </span>
+              <ul class="dropdown-menu mt-2 shadow-lg dropdown-menu--header__services">
+                <li id="calculatorService"><a class="dropdown-item" routerLink="calculadora/calculadora-personal" style="white-space: pre-wrap;">Calculadora de huella de carbono</a></li>
+                <li id="activeService"><a class="dropdown-item" routerLink="actividades/crear-actividad"
+                                          style="white-space: pre-wrap;">Registro de actividades diarias</a></li>
+                <li><a class="dropdown-item" routerLink="/tienda" style="white-space: pre-wrap;">Tienda</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Rankings</a>
+          </li>
+          <li class="nav-item position-relative d-flex align-items-center form-control--header__search">
+            <div class="position-absolute">
+              <i class="ms-2 fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input class="form-control form-control-sm" style="padding-left: 32px;" type="search" placeholder="Buscar"
+                   aria-label="Search">
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="d-block btn btn-success" id="isLoggedIn">Iniciar sesión</button>
+          <div class="d-flex flex-column flex-lg-row align-items-center gap-4" id="isNotLoggedIn">
+            <a class="d-flex align-items-center gap-2 nav-link w-100" href="#">
+              <i class="fas fa-bell"></i>
+              <span class="fs-6 d-lg-none">Notificaciones</span>
+            </a>
+            <a class="d-flex align-items-center gap-2 nav-link w-100" routerLink="/tienda">
+              <i class="fas fa-dollar-sign"></i>
+              <span class="fs-6 d-lg-none">Tienda</span>
+            </a>
+            <div class="nav-item dropdown d-none d-lg-block">
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow-lg mt-3">
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="#" id="closeSesionDesktop">Cerrar sesión</a></li>
+              </ul>
+            </div>
+            <div class="d-flex flex-column gap-3 d-lg-none w-100">
+              <a class="nav-link" href="#">
+                <i class="fas fa-user"></i>
+                <span class="fs-6">Perfil</span>
+              </a>
+              <button type="button" class="btn btn-sm btn-danger mb-2" id="closeSesionMobile">Cerrar sesión</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="container mb-4">
+  <h1 class="text-center color-green fs-2 fw-bold my-4">Cálculo de Huella de carbono personal</h1>
+
+  <div *ngIf="currentStep === 0" class="text-center p-5 border rounded shadow-sm">
+    <div class="d-flex justify-content-center gap-4 my-5">
+      <i class="fa-solid fa-car fs-1 text-muted"></i>
+      <i class="fa-solid fa-bolt fs-1 text-muted"></i>
+      <i class="fa-solid fa-utensils fs-1 text-muted"></i>
+      <i class="fa-solid fa-trash fs-1 text-muted"></i>
+    </div>
+    <button type="button" class="btn btn-dark btn-lg px-5" (click)="empezar()">EMPEZAR</button>
+  </div>
+
+  <div *ngIf="currentStep > 0" class="container_calc shadow-sm">
+
+    <div class="sidebar" *ngIf="currentStep >= 1 && currentStep <= 5">
+      <ul>
+        <li [class.active]="currentStep === 1">
+          <img src="assets/icons/transporte.svg" alt="Transporte">
+          <span>Transporte</span>
+        </li>
+        <li [class.active]="currentStep === 2">
+          <img src="assets/icons/energy.svg" alt="Energía">
+          <span>Energía</span>
+        </li>
+        <li [class.active]="currentStep === 3">
+          <img src="assets/icons/food.svg" alt="Alimentación">
+          <span>Alimentación</span>
+        </li>
+        <li [class.active]="currentStep === 4 || currentStep === 5">
+          <img src="assets/icons/residue.svg" alt="Residuos">
+          <span>Residuos</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content">
+
+      <form #form="ngForm" (ngSubmit)="finalizar()">
+
+        <div *ngIf="currentStep === 1">
+          <h2>¿Cuántas horas a la semana pasas en cada uno de estos transportes?</h2>
+          <div class="input-group">
+            <div>
+              <label for="bus">Bus o Combi</label>
+              <input type="number" id="bus" name="bus" placeholder="Ingresa horas"
+                     [(ngModel)]="formData.horasBusSemana" min="0">
+            </div>
+            <div>
+              <label for="tren">Tren eléctrico</label>
+              <input type="number" id="tren" name="tren" placeholder="Ingresa horas"
+                     [(ngModel)]="formData.horasTrenSemana" min="0">
+            </div>
+            <div>
+              <label for="metropolitano">Metropolitano</label>
+              <input type="number" id="metropolitano" name="metropolitano" placeholder="Ingresa horas"
+                     [(ngModel)]="formData.horasMetropolitanoSemana" min="0">
+            </div>
+            <div>
+              <label for="auto">Auto</label>
+              <input type="number" id="auto" name="auto" placeholder="Ingresa horas"
+                     [(ngModel)]="formData.horasAutoSemana" min="0">
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-4">
+            <button type="button" class="btn" (click)="siguiente(1)">SIGUIENTE</button>
+          </div>
+        </div>
+
+        <div *ngIf="currentStep === 2">
+          <h2 class="fs-4 fw-bold">Consumo de Energía en el Hogar</h2>
+          <div class="input-group">
+            <div>
+              <label for="kwh">¿Cuánto es tu consumo eléctrico doméstico promedio? (en kWh)</label>
+              <input type="number" id="kwh" name="kwh" placeholder="INGRESA CANTIDAD EN kWh"
+                     [(ngModel)]="formData.kwhMes" min="0" required #kwhModel="ngModel">
+              <div *ngIf="kwhModel.invalid && kwhModel.touched" class="text-danger small mt-1">
+                Este campo es requerido.
+              </div>
+            </div>
+            <div>
+              <label for="glp">¿Cuántos balones de gas de 10 kg consumes al mes?</label>
+              <input type="number" id="glp" name="glp" placeholder="INGRESA NÚMERO"
+                     [(ngModel)]="formData.balonesGlp10kgMes" min="0" required #glpModel="ngModel">
+              <div *ngIf="glpModel.invalid && glpModel.touched" class="text-danger small mt-1">
+                Este campo es requerido.
+              </div>
+            </div>
+          </div>
+          <div class="btn-nav-group">
+            <button type="button" class="btn btn-secondary" (click)="atras(2)">ATRÁS</button>
+            <button type="button" class="btn" (click)="siguiente(2)"
+                    [disabled]="kwhModel.invalid || glpModel.invalid">SIGUIENTE</button>
+          </div>
+        </div>
+
+        <div *ngIf="currentStep === 3">
+          <h2 class="fs-5 fw-bold mb-3">¿A cuál de estas tres opciones se aproxima más tu dieta?</h2>
+          <p class="fs-6 mb-4">A la semana, la cantidad de días que como carne son:</p>
+          <div class="radio-group">
+            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="7" [(ngModel)]="formData.diasCarnePorSemana" required> 7 días</label>
+            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="6" [(ngModel)]="formData.diasCarnePorSemana" required> 6 días</label>
+            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="5" [(ngModel)]="formData.diasCarnePorSemana" required> 5 días</label>
+            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="4" [(ngModel)]="formData.diasCarnePorSemana" required> 4 días</label>
+            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="3" [(ngModel)]="formData.diasCarnePorSemana" required> 3 días</label>
+            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="2" [(ngModel)]="formData.diasCarnePorSemana" required> 2 días</label>
+            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="1" [(ngModel)]="formData.diasCarnePorSemana" required> 1 día</label>
+            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="0" [(ngModel)]="formData.diasCarnePorSemana" required> Ninguno</label>
+          </div>
+          <div class="btn-nav-group">
+            <button type="button" class="btn btn-secondary" (click)="atras(3)">ATRÁS</button>
+            <button type="button" class="btn" (click)="siguiente(3)"
+                    [disabled]="formData.diasCarnePorSemana == null">SIGUIENTE</button>
+          </div>
+        </div>
+
+        <div *ngIf="currentStep === 4">
+          <h2 class="fs-5 fw-bold mb-3">¿Qué cantidad de residuos se genera al día promedio en tu hogar?</h2>
+          <p class="fs-6 mb-4">Una bolsa pequeña de supermercado equivale a 5 litros.</p>
+          <div class="input-group">
+            <div>
+              <label for="bolsas5L">Cantidad de bolsas pequeñas (5 litros):</label>
+              <input type="number" id="bolsas5L" name="bolsas5L" placeholder="Ingrese número de bolsas" [(ngModel)]="formData.bolsas5L" min="0">
+            </div>
+            <div>
+              <label for="bolsas10L">Cantidad de bolsas medianas (10 litros):</label>
+              <input type="number" id="bolsas10L" name="bolsas10L" placeholder="Ingrese número de bolsas" [(ngModel)]="formData.bolsas10L" min="0">
+            </div>
+            <div>
+              <label for="bolsas20L">Cantidad de bolsas grandes (20 litros):</label>
+              <input type="number" id="bolsas20L" name="bolsas20L" placeholder="Ingrese número de bolsas" [(ngModel)]="formData.bolsas20L" min="0">
+            </div>
+          </div>
+          <div class="btn-nav-group">
+            <button type="button" class="btn btn-secondary" (click)="atras(4)">ATRÁS</button>
+            <button type="button" class="btn" (click)="siguiente(4)">SIGUIENTE</button>
+          </div>
+        </div>
+
+        <div *ngIf="currentStep === 5">
+          <h2 class="fs-5 fw-bold mb-4">¿Qué tipo de residuos reciclas?</h2>
+          <div class="checkbox-group">
+            <label><input type="checkbox" class="form-check-input" name="vidrio" [(ngModel)]="reciclajeTipos.vidrio"> Vidrio</label>
+            <label><input type="checkbox" class="form-check-input" name="plastico" [(ngModel)]="reciclajeTipos.plastico"> Plástico</label>
+            <label><input type="checkbox" class="form-check-input" name="aluminio" [(ngModel)]="reciclajeTipos.aluminio"> Aluminio</label>
+            <label><input type="checkbox" class="form-check-input" name="organicos" [(ngModel)]="reciclajeTipos.organicos"> Residuos orgánicos</label>
+            <label><input type="checkbox" class="form-check-input" name="papel" [(ngModel)]="reciclajeTipos.papel"> Papel y cartones</label>
+            <label><input type="checkbox" class="form-check-input" name="ninguno" [(ngModel)]="reciclajeTipos.ninguno"> Ninguno de estos</label>
+          </div>
+          <div class="btn-nav-group">
+            <button type="button" class="btn btn-secondary" (click)="atras(5)">ATRÁS</button>
+            <button type="submit" class="btn btn-success">FINALIZAR</button>
+          </div>
+        </div>
+
+        <div *ngIf="currentStep === 6" class="content_result">
+
+          <div *ngIf="isLoading; else showResults" class="text-center" style="padding: 100px 0;">
+            <h2 class="fs-3">Calculando resultados...</h2>
+            <div class="spinner-border text-success" role="status"><span class="visually-hidden">Loading...</span></div>
+          </div>
+
+          <ng-template #showResults>
+            <div *ngIf="resultados">
+              <h2 class="title">RESULTADOS</h2>
+              <h3>TU HUELLA DE CARBONO ES:</h3>
+
+              <h2 class="text-center color-green fs-1 fw-bold my-4">
+                {{ resultados.totalKgCO2e | number:'1.2-2' }} kg CO2e
+                <span class="fs-5 text-dark">/ año</span>
+              </h2>
+
+              <div class="container-canva" style="max-width: 300px; margin: 30px auto; position: relative; height:300px; width:300px">
+                <canvas id="myChart" #myChart></canvas>
+              </div>
+
+              <div class="legend">
+                <div class="legend-item">
+                  <span class="legend-title">TRANSPORTE</span>
+                  <span class="legend-value">{{ resultados.totalTransporteTon | number:'1.2-2' }} TON</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-title">ENERGÍA</span>
+                  <span class="legend-value">{{ resultados.totalEnergiaTon | number:'1.2-2' }} TON</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-title">ALIMENTACIÓN</span>
+                  <span class="legend-value">{{ resultados.totalAlimentacionTon | number:'1.2-2' }} TON</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-title">RESIDUOS</span>
+                  <span class="legend-value">{{ resultados.totalResiduosTon | number:'1.2-2' }} TON</span>
+                </div>
+              </div>
+
+              <div class="progress-container">
+                <p>Para compensar tu Huella de Carbono se debe plantar en el lapso de un año: 5 árboles</p>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 70%;"></div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center mt-4">
+                <button type="button" class="btn" (click)="volverAlInicio()">VOLVER AL INICIO</button>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

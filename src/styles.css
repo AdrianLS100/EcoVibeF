@@ -1,1 +1,318 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --white: #FFFFFF;
+  --green: hsl(158, 57%, 41%);
+  --gradient: linear-gradient(90deg, #CAE2D9, #B8DCC7, #CEE8DD, #EAF3C1);
+  --secondary: #8a91a6;
+  --text-gray: #9D9B9B;
+  --tertiary: #f2b366;
+  --gray: #f2f2f2;
+  --black: #262626;
+  --mobile: 390px;
+  --tablet: 700px;
+  --desktop: 1000px;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,*::after,*::before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif !important;
+  color: #222;
+}
+
+/* .container {
+  width: 100%;
+  padding-inline: 16px;
+} */
+
+.text-white {
+  color: var(--white);
+}
+.text-black {
+  color: var(--black);
+}
+.text-secondary {
+  color: var(--secondary);
+}
+.text-green {
+  color: var(--green) !important;
+}
+
+
+.color-green {
+  color: var(--green);
+}
+.color-gray-text {
+  color: var(--text-gray);
+}
+.bg-green {
+  background-color: var(--green);
+}
+.bg-white {
+  background-color: var(--white);
+}
+.bg-gradient {
+  background: var(--gradient);
+}
+.color-secondary {
+  color: var(--secondary);
+}
+
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.border-none {
+  border-style: none;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.icon-md {
+  width: 32px;
+  height: 32px;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.gap-3 {
+  gap: 12px;
+}
+
+.gap-4 {
+  gap: 16px;
+}
+
+.my-6 {
+  margin-block: 24px;
+}
+
+.mt-4 {
+  margin-top: 16px;
+}
+
+.py-4 {
+  padding-block: 16px;
+}
+
+.py-12 {
+  padding-block: 48px;
+}
+
+.pt-2 {
+  padding-top: 8px;
+}
+
+.pl-2 {
+  padding-left: 8px;
+}
+
+.list-none {
+  list-style-type: none;
+}
+
+.rounded-md {
+  border-radius: 6px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+@media (min-width: 700px) {
+  .container {
+    padding-inline: 24px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .container {
+    padding-inline: 48px;
+  }
+}
+
+/* Titulares principales */
+.font-title-xl { /* Títulos grandes, negrita */
+  font-size: 55px;
+  font-weight: 700;
+  line-height: 82.5px;
+}
+
+.font-title-lg { /* Títulos grandes */
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+.font-title-md { /* Títulos medianos */
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+.font-title-sm { /* Títulos pequeños */
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+}
+
+.font-title-xs { /* Títulos extra pequeños */
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+/* Subtítulos */
+.font-subtitle-lg { /* Subtítulos grandes */
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 48px;
+}
+.font-subtitle-xlg { /* Subtítulos grandes */
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 60px;
+}
+
+.font-subtitle-md { /* Subtítulos medianos */
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 36px;
+}
+
+.font-subtitle-sm { /* Subtítulos pequeños */
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+/* Texto enfático (Bold) */
+.font-text-xlg-bold { /* Texto grande, bold 500 */
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 45px;
+}
+.font-text-lg-bold { /* Texto grande, bold 500 */
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 30px;
+}
+
+.font-text-md-bold { /* Texto mediano, bold 500 */
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+}
+
+.font-text-sm-bold { /* Texto pequeño, bold 500 */
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.5px;
+}
+
+/* Texto regular (Normal) */
+.font-text-md { /* Texto mediano, bold 400 */
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.font-text-sm { /* Texto pequeño, bold 400 */
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19.5px;
+}
+
+.font-text-lg { /* Texto grande, bold 400 */
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 45px;
+}
+
+/* Opciones específicas */
+.font-heading-md { /* Heading destacado */
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 30px;
+}
+
+
+.button-primary{
+  padding-inline: 50px;
+  padding-block: 20px;
+  border-radius: 45px;
+  border: none;
+  cursor: pointer;
+}
+.button-secondary{
+  padding-inline: 27px;
+  padding-block: 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-dark-custom {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 50px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-dark-custom:hover {
+  background-color: #444;
+}
+.button-group{
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}/* You can add global styles to this file, and also import other style files */
+
+/* Ocultar navbar y footer cuando la página tiene la clase no-layout */
+body.no-layout app-navbar,
+body.no-layout app-footer {
+  display: none !important;
+}
+
+/* Para ocupar toda la pantalla */
+body.no-layout {
+  padding: 0;
+  margin: 0;
+}
+
+/* Fondo blanco cuando estemos en la página de transporte */
+body.white-bg {
+  background: #fff !important;
+}
