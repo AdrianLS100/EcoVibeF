@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core'; // 1. Importar OnInit
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
@@ -7,11 +7,12 @@ import { Observable, forkJoin, of } from 'rxjs';
 import { Energia} from '../../../models/energia-model';
 import { EnergiaService} from '../../../services/energia-service';
 import { RegistroStateService} from '../../../services/registro-state';
+import {HeaderComponent} from '../../../components/header/header';
 
 @Component({
   selector: 'app-energia',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './energia.html',
   styleUrls: ['./energia.css']
 })

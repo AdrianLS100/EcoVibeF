@@ -1,0 +1,59 @@
+<app-header></app-header>
+
+<main class="container my-5">
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <h1 class="text-green fw-bold mb-4">Mis Notificaciones</h1>
+
+      <div *ngIf="isLoading" class="text-center p-5">
+        <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && notificaciones.length === 0" class="alert alert-secondary text-center">
+        <i class="fas fa-bell-slash fs-3 d-block mb-2"></i>
+        No tienes notificaciones por ahora.
+      </div>
+
+      <div *ngIf="!isLoading && notificaciones.length > 0" class="notification-list shadow-sm">
+        <ul class="list-group list-group-flush">
+
+          <li *ngFor="let notif of notificaciones"
+              class="list-group-item notification-item"
+              [class.leido]="notif.leido"
+              (click)="onNotificationClick(notif)">
+
+            <div class="icon-container">
+              <i *ngIf="!notif.leido" class="fas fa-circle text-primary"></i> <i *ngIf="notif.leido" class="fas fa-check-circle text-muted"></i> </div>
+
+            <div class="message-container">
+              <span class="mensaje">{{ notif.mensaje }}</span>
+              <span class="fecha">{{ notif.fechaCreacion | date:'d/M/yy, h:mm a' }}</span>
+            </div>
+
+            <div *ngIf="notif.linkRuta" class="link-icon">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+
+          </li>
+        </ul>
+      </div>
+
+      <nav *ngIf="!isLoading && pageInfo && pageInfo.totalPages > 1" class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
+          <li class="page-item" [class.disabled]="pageInfo.number === 0">
+            <a class="page-link" href="javascript:void(0);" (click)="irAPagina(pageInfo.number - 1)">Anterior</a>
+          </li>
+          <li class="page-item active">
+            <a class="page-link" href="javascript:void(0);">{{ pageInfo.number + 1 }} de {{ pageInfo.totalPages }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="pageInfo.number + 1 >= pageInfo.totalPages">
+            <a class="page-link" href="javascript:void(0);" (click)="irAPagina(pageInfo.number + 1)">Siguiente</a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</main>

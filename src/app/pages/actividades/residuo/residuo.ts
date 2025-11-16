@@ -6,6 +6,7 @@ import {Router, RouterLink} from '@angular/router';
 import { Residuo} from '../../../models/residuo-model';
 import { ResiduoService} from '../../../services/residuo-service';
 import { RegistroStateService} from '../../../services/registro-state';
+import {HeaderComponent} from '../../../components/header/header';
 
 @Component({
   selector: 'app-residuo',
@@ -13,7 +14,7 @@ import { RegistroStateService} from '../../../services/registro-state';
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink
+    HeaderComponent
   ],
   templateUrl: './residuo.html',
   styleUrls: ['./residuo.css']
@@ -38,13 +39,11 @@ export class ResiduoComponent implements OnInit {
       console.error("No hay ID de actividad. Volviendo al inicio.");
       alert("Error: No se ha iniciado un registro. Volviendo al inicio.");
 
-      // CORRECCIÓN DE TYPO: 'actividades' (plural)
       this.router.navigate(['/actividades/crear-actividad']);
     }
   }
 
   goBack() {
-    // CORRECCIÓN DE TYPO: 'actividades' (plural)
     this.router.navigate(['/actividades/energia']);
   }
 

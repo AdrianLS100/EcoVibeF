@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importante para *ngIf
+import { CommonModule } from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 
 import { RegistroStateService} from '../../../services/registro-state';
@@ -7,15 +7,14 @@ import { ReporteService} from '../../../services/reporte-service';
 import { GamificacionService} from '../../../services/gamificacion-service';
 
 import { Reporte} from '../../../models/reporte-model';
-import {EstadoGamificacion} from '../../../models/estadogamificacion-model';
 
-// Chart.js (Recuerda: npm install chart.js)
 import { Chart, registerables } from 'chart.js/auto';
+import {HeaderComponent} from '../../../components/header/header';
 
 @Component({
   selector: 'app-resultado',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, HeaderComponent],
   templateUrl: './resultado.html',
   styleUrls: ['./resultado.css']
 })
@@ -117,9 +116,9 @@ export class ResultadoComponent implements OnInit {
             this.reporte.residuosKgCO2e
           ],
           backgroundColor: [
-            '#CCEAEF', // bg-01
-            '#FFE6C8', // bg-02
-            '#DFFFC2'  // bg-03
+            '#CCEAEF',
+            '#FFE6C8',
+            '#DFFFC2'
           ],
           borderColor: '#ffffff',
           borderWidth: 2

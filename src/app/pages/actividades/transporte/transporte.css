@@ -34,31 +34,6 @@
   /* margin-bottom: 5px; */
 }
 
-/* .form-section .input-group {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 5px;
-  margin: auto;
-  margin-block: 40px;
-  max-width: 250px;
-} */
-
-/* .form-section .input-group .icon {
-  font-size: 18px;
-  color: #00796b;
-  margin-right: 10px;
-}
-
-.form-section .input-group input {
-  border: none;
-  outline: none;
-  width: 100%;
-  font-size: 14px;
-  padding: 5px;
-} */
 
 .form-section .checkbox-group {
   display: flex;

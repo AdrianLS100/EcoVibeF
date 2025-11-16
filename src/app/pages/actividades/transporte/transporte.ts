@@ -7,11 +7,12 @@ import { Observable, forkJoin, of } from 'rxjs';
 import { Transporte} from '../../../models/transporte-model';
 import { TransporteService} from '../../../services/transporte-service';
 import { RegistroStateService} from '../../../services/registro-state';
+import {HeaderComponent} from '../../../components/header/header';
 
 @Component({
   selector: 'app-transporte',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './transporte.html',
   styleUrls: ['./transporte.css']
 })
@@ -28,7 +29,6 @@ export class TransporteComponent implements OnInit {
     flightDistance: null as number | null
   };
 
-  // 5. Objeto para los checkboxes (más fácil de enlazar que un Map)
   mediosSeleccionados = {
     auto: false,
     moto: false,

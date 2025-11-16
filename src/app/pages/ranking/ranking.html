@@ -1,0 +1,61 @@
+<app-header></app-header>
+<main class="container my-5">
+  <div class="text-center col-md-8 mx-auto">
+    <h1 class="text-center text-green fw-bold mb-3">Ranking de Sostenibilidad</h1>
+    <p class="text-center fs-5 text-secondary">
+      Esta es la lista de los usuarios con la menor huella de carbono.
+      ¡El primer puesto es el más sostenible!
+    </p>
+  </div>
+
+  <div *ngIf="!isLoading && top3.length > 0" class="podium">
+  </div>
+
+  <div *ngIf="isLoading" class="text-center p-5">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading" class="ranking-container shadow-sm mt-5">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+      <tr>
+        <th scope="col" class="text-center" style="width: 10%;">#</th>
+        <th scope="col">Usuario</th>
+        <th scope="col" class="text-center text-success" style="width: 15%;">Total (kg)</th>
+        <th scope="col" class="text-center" style="width: 13%;">Transporte</th>
+        <th scope="col" class="text-center" style="width: 13%;">Energía</th>
+        <th scope="col" class="text-center" style="width: 13%;">Alimentación</th>
+        <th scope="col" class="text-center" style="width: 13%;">Residuos</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngIf="rankingList.length === 0">
+        <td colspan="7" class="text-center text-secondary py-4">
+          Aún no hay usuarios en el ranking. ¡Calcula tu huella para ser el primero!
+        </td>
+      </tr>
+
+      <tr *ngFor="let user of rankingList">
+        <td class="fs-4 fw-bold text-center">
+          <span *ngIf="user.rank === 1">🥇</span>
+          <span *ngIf="user.rank === 2">🥈</span>
+          <span *ngIf="user.rank === 3">🥉</span>
+          <span *ngIf="user.rank > 3">{{ user.rank }}</span>
+        </td>
+        <td class="fw-medium fs-5">
+          <img [src]="getPodioImagen(user.username)" class="avatar-small me-2" [alt]="user.username">
+          {{ user.username }}
+        </td>
+        <td class="fw-bold fs-5 text-success text-center">{{ user.huellaKgCO2e | number:'1.2-2' }}</td>
+        <td class="text-center text-secondary">{{ user.huellaTransporte | number:'1.2-2' }}</td>
+        <td class="text-center text-secondary">{{ user.huellaEnergia | number:'1.2-2' }}</td>
+        <td class="text-center text-secondary">{{ user.huellaAlimentacion | number:'1.2-2' }}</td>
+        <td class="text-center text-secondary">{{ user.huellaResiduos | number:'1.2-2' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>

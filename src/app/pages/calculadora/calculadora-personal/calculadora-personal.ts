@@ -5,11 +5,13 @@ import {Router, RouterLink} from '@angular/router';
 import Chart from 'chart.js/auto';
 import { CalculadoraPersonal } from '../../../models/calculadora-model';
 import { CalculadoraService } from '../../../services/calculadora-service';
+import {LoginService} from '../../../services/login-service';
+import {HeaderComponent} from '../../../components/header/header';
 
 @Component({
   selector: 'app-calculadora-personal',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './calculadora-personal.html',
   styleUrls: ['./calculadora-personal.css']
 })
@@ -17,6 +19,7 @@ export class CalculadoraPersonalComponent {
 
   private router = inject(Router);
   private calculadoraService = inject(CalculadoraService);
+  private loginService = inject(LoginService);
 
   public currentStep = 0;
   public formData = new CalculadoraPersonal();
@@ -27,7 +30,18 @@ export class CalculadoraPersonalComponent {
   @ViewChild('myChart') myChartCanvas?: ElementRef<HTMLCanvasElement>;
   private myChart: Chart | null = null;
 
-  empezar(){ this.currentStep = 1; }
+  empezar() {
+    const userId = this.loginService.getUsuarioId();
+    if (!userId) {
+      alert("Error de sesión. Por favor, inicia sesión de nuevo.");
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.formData.usuarioId = Number(userId);
+    // ---
+
+    this.currentStep = 1;
+  }
   siguiente(i:number){ this.currentStep = i + 1; window.scrollTo(0,0); }
   atras(i:number){ this.currentStep = i - 1; window.scrollTo(0,0); }
 

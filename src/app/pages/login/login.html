@@ -1,0 +1,67 @@
+<div class="login-page-wrapper">
+  <div class="login-container mat-elevation-z8">
+
+    <div class="login-branding-panel">
+      <div class="branding-content">
+        <img src="assets/imagenes/logo-ecovibe.png" alt="EcoVibe Logo" class="logo">
+        <h1>Bienvenido</h1>
+        <p>Mide tu impacto, transforma tu mundo.</p>
+      </div>
+    </div>
+
+    <div class="login-form-panel">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <h2>Iniciar Sesión</h2>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Nombre de Usuario</mat-label>
+          <input matInput
+                 formControlName="username"
+                 required>
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
+            El usuario es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput
+                 type="password"
+                 formControlName="password"
+                 required>
+          <mat-icon matSuffix>lock</mat-icon>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+            La contraseña es requerida.
+          </mat-error>
+        </mat-form-field>
+
+        <div *ngIf="errorMessage" class="error-message">
+          <mat-icon class="error-icon">error_outline</mat-icon>
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <div class="text-end mb-3" style="font-size: 0.9rem;">
+          <a routerLink="/forgot-password" class="text-secondary" style="text-decoration: none;">
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
+        <div class="login-actions">
+          <button mat-raised-button
+                  color="primary"
+                  type="submit"
+                  class="full-width"
+                  [disabled]="loginForm.invalid">
+            Ingresar
+          </button>
+        </div>
+
+        <div class="register-link">
+          <span>¿No tienes una cuenta?</span>
+          <a routerLink="/register">Regístrate aquí</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

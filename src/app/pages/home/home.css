@@ -87,12 +87,8 @@
 .footer-home .social-media .social-media--container svg {
   width: 24px;
   height: 24px;
-  /* transition: color .15s linear; */
 }
-/*
-.footer-home .social-media .social-media--container li:hover svg {
-  color: #101010;
-} */
+
 
 @media (min-width: 700px) {
   .footer-home {
@@ -118,7 +114,6 @@
   }
 }
 
-/* Estructura general */
 .body-home {
   width: 100%;
   min-height: 100vh;
@@ -158,54 +153,7 @@
   }
 }
 
-/* Estilos del banner */
-/* .banner, .banner_how {
-  background: var(--gradient);
-  padding: 20px 16px;
-}
 
-.banner {
-  display: flex;
-  flex-direction: column;
-  img {
-    max-width: 100vw;
-  }
-  button {
-    padding-inline: 30px;
-  }
-  .banner-text {
-    padding-inline: 16px;
-  }
-}
-
-@media (min-width: 700px) {
-  .banner {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 120px;
-    padding: 115px 0;
-    .banner-text {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-inline: 0;
-      h1 {
-        color: var(--secondary);
-        margin-bottom: 95px;
-      }
-    }
-    img {
-      width: 479px;
-      height: 179px;
-    }
-    button {
-      max-width: 399px;
-    }
-  }
-} */
-
-/* Estilos del banner_how */
 .banner_how {
   padding-block: 32px;
   margin-top: 60px;
@@ -223,9 +171,7 @@
   }
 }
 
-/* Estilos del banner_ranking */
 .banner_ranking {
-  /* Solo definimos los márgenes verticales */
   margin-top: 40px;
   margin-bottom: 50px;
 
@@ -237,7 +183,6 @@
 
 @media (min-width: 700px) {
   .banner_ranking {
-    /* Y los actualizamos para la versión de escritorio */
     margin-top: 95px;
     margin-bottom: 200px;
   }
@@ -258,7 +203,6 @@
   }
 }
 
-/* Estilos del podium */
 .podium {
   display: flex;
   justify-content: center;
@@ -301,7 +245,6 @@
   margin: 0 auto 5px;
 }
 
-/* Estilos del panel de información */
 .info-panel {
   background-color: #FFD9A6;
   padding: 20px;
@@ -323,7 +266,6 @@
   margin-bottom: 15px;
 }
 
-/* Botón de registro */
 .btn-register {
   text-align: center;
   background-color: var(--green);
@@ -339,7 +281,6 @@
   background-color: #249c60;
 }
 
-/* Banner de tendencias */
 .banner_trend {
 
 
@@ -396,7 +337,6 @@
   }
 }
 
-/* Misión y Visión */
 .mission-vision-section {
   display: flex;
   flex-wrap: wrap;
@@ -543,5 +483,5 @@
 }
 
 .img-how {
-  max-width: 600px;  /* Ajusta el tamaño a gusto */
+  max-width: 600px;
 }

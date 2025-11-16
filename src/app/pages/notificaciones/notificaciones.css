@@ -1,0 +1,74 @@
+.text-green {
+  color: #004d40;
+}
+
+.notification-list {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.notification-item:hover {
+  background-color: #f8f9fa;
+}
+
+.notification-item.leido {
+  opacity: 0.7;
+}
+.notification-item.leido .mensaje {
+  font-weight: normal;
+}
+.notification-item.leido .icon-container i {
+  color: #6c757d; /* Gris */
+}
+
+.icon-container {
+  font-size: 1.2rem;
+  width: 20px;
+  text-align: center;
+}
+.icon-container .fa-circle {
+  font-size: 0.7rem;
+  color: #0d6efd;
+}
+
+.message-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-container .mensaje {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #212529;
+}
+
+.message-container .fecha {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.link-icon {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.page-link {
+  cursor: pointer;
+}
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+}

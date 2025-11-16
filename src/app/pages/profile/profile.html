@@ -1,0 +1,90 @@
+<app-header></app-header>
+
+<main class="profile-container">
+
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner diameter="60"></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && profile" class="profile-content">
+
+    <mat-card class="profile-header-card mat-elevation-z4">
+      <mat-card-content>
+        <div class="avatar-section">
+          <i class="fas fa-user-circle avatar-icon"></i>
+        </div>
+        <div class="info-section">
+          <h1 class="username">{{ profile.username }}</h1>
+          <p class="email">{{ profile.email }}</p>
+        </div>
+        <div class="stats-section">
+          <div class="stat-box">
+            <span class="stat-label">Huella Anual</span>
+            <span class="stat-value">
+              {{ (profile.huellaTotalKgCO2e || 0) | number:'1.2-2' }}
+            </span>
+            <span class="stat-unit">kg CO2e</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-tab-group class="profile-tabs-card mat-elevation-z4" animationDuration="500ms">
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="me-2"></mat-icon>
+          Mi Información
+        </ng-template>
+        <div class="tab-content">
+          <p class="text-secondary">Aquí podrás editar tu nombre de usuario y email (próximamente).</p>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre de Usuario</mat-label>
+            <input matInput [value]="profile.username" readonly>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput [value]="profile.email" readonly>
+          </mat-form-field>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="me-2"></mat-icon>
+          Seguridad
+        </ng-template>
+        <div class="tab-content">
+          <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
+            <h4>Cambiar Contraseña</h4>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Nueva Contraseña</mat-label>
+              <input matInput type="password" formControlName="newPassword" required>
+              <mat-icon matSuffix>lock</mat-icon>
+              <mat-error *ngIf="passwordForm.get('newPassword')?.hasError('required')">
+                La contraseña es requerida.
+              </mat-error>
+              <mat-error *ngIf="passwordForm.get('newPassword')?.hasError('minlength')">
+                Debe tener al menos 6 caracteres.
+              </mat-error>
+            </mat-form-field>
+
+            <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center">
+              <i class="fas fa-check-circle me-2"></i> {{ successMessage }}
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center">
+              <i class="fas fa-exclamation-triangle me-2"></i> {{ errorMessage }}
+            </div>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid">
+              Actualizar Contraseña
+            </button>
+          </form>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+</main>

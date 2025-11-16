@@ -4,7 +4,6 @@ import { environment } from '../../environments/environment';
 import { Recompensa} from '../models/recompensa-model';
 import { EstadoGamificacion} from '../models/estadogamificacion-model';
 import { CanjearRequest} from '../models/canjearrequest-model';
-import { OtorgarPuntoRequest} from '../models/otorgarpuntorequest-model';
 
 @Injectable({
   providedIn: 'root'

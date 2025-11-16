@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 
 import { RecursoService, Page} from '../../services/recursoeducativo-service';
 import { Recurso} from '../../models/recurso-model';
+import {HeaderComponent} from '../../components/header/header';
 
 @Component({
   selector: 'app-recursos-educativos',
@@ -12,7 +13,7 @@ import { Recurso} from '../../models/recurso-model';
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink
+    HeaderComponent
   ],
   templateUrl: './recursos-educativos.html',
   styleUrls: ['./recursos-educativos.css']

@@ -1,4 +1,6 @@
 export class CalculadoraPersonal {
+
+  usuarioId: number;
   horasBusSemana?: number;
   horasTrenSemana?: number;
   horasMetropolitanoSemana?: number;

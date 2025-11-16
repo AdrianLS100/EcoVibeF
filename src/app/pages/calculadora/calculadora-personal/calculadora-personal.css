@@ -64,7 +64,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* --- Menú Lateral (Sidebar) --- */
 .sidebar {
   width: 100%;
   padding: 10px 20px;
@@ -88,7 +87,7 @@
   align-items: center;
   padding: 10px;
   margin: 5px;
-  cursor: default; /* No es clickeable */
+  cursor: default;
   width: 80px;
   border-radius: 8px;
   transition: background-color 0.3s;
@@ -102,7 +101,6 @@
   opacity: 0.5;
 }
 
-/* ¡Validación de Diseño! -> Sincroniza con el [class.active] del TS */
 .sidebar li.active {
   background-color: #e6f4ea; /* Verde claro */
   color: #004d40;
@@ -111,25 +109,23 @@
 
 .sidebar li.active img {
   opacity: 1;
-  /* (Opcional) Filtro para colorear SVGs a verde */
   filter: invert(20%) sepia(50%) saturate(2000%) hue-rotate(150deg) brightness(90%) contrast(100%);
 }
 
 
-/* --- Contenido (Preguntas) --- */
 .content {
   flex-grow: 1;
   padding: 20px;
 }
 
 .content h2 {
-  font-size: 1.5rem; /* 24px */
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #004d40; /* Verde oscuro */
+  color: #004d40;
   margin-bottom: 20px;
 }
 
-.content p.fs-6 { /* Párrafo de descripción */
+.content p.fs-6 {
   font-size: 1rem;
   color: #555;
   margin-bottom: 24px;
@@ -163,7 +159,6 @@
   box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
 }
 
-/* --- Grupos de Radios y Checkboxes --- */
 .radio-group, .checkbox-group {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -194,7 +189,6 @@
   height: 1.2em;
 }
 
-/* --- Botones --- */
 .btn-nav-group {
   display: flex;
   justify-content: space-between;
@@ -202,7 +196,7 @@
 }
 
 .btn {
-  background-color: #2e7d32; /* Verde principal */
+  background-color: #2e7d32;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -214,10 +208,10 @@
 }
 
 .btn:hover {
-  background-color: #1d5f21; /* Verde más oscuro */
+  background-color: #1d5f21;
 }
 
-.btn.btn-secondary { /* Botón "Atrás" */
+.btn.btn-secondary {
   background-color: #eee;
   color: #333;
 }
@@ -225,14 +219,12 @@
   background-color: #ddd;
 }
 
-/* ¡Validación! Estilo para botones deshabilitados */
 .btn:disabled {
   background-color: #ccc;
   cursor: not-allowed;
   opacity: 0.7;
 }
 
-/* --- Pantalla de Resultados (de preguntas-calculadora.css) --- */
 .content_result {
   max-width: 800px;
   margin: 0 auto;
@@ -278,14 +270,13 @@
 .legend-value { font-size: 12px; }
 
 
-/* --- Diseño Responsivo --- */
 @media (min-width: 768px) {
   .container_calc {
     flex-direction: row;
   }
   .sidebar {
     flex-direction: column;
-    width: 250px; /* Ancho fijo para el menú lateral */
+    width: 250px;
     border-bottom: none;
     border-right: 1px solid #eee;
     justify-content: flex-start;
@@ -300,7 +291,7 @@
     text-align: left;
   }
   .sidebar li img {
-    width: 24px; /* Iconos más pequeños en desktop */
+    width: 24px;
     height: 24px;
     margin-bottom: 0;
     margin-right: 15px;

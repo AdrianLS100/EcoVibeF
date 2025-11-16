@@ -4,6 +4,6 @@ export class FactoresEmision {
   subcategoria: string;
   unidadBase: string;
   factorKgco2ePerUnidad: number;
-  fuente?: string; // Sigue siendo opcional, lo cual está bien
+  fuente?: string;
   vigente: boolean;
 }
