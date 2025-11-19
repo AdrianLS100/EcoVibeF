@@ -1,0 +1,121 @@
+<div class="login-page-wrapper">
+  <div class="login-container mat-elevation-z8">
+
+    <div class="login-branding-panel">
+      <div class="branding-content">
+        <img src="assets/imagenes/logo-ecovibe.png" alt="EcoVibe Logo" class="logo">
+        <h1>Cuenta Familiar</h1>
+        <p>Mide el impacto de todo tu hogar.</p>
+      </div>
+    </div>
+
+    <div class="login-form-panel">
+
+      <mat-tab-group animationDuration="500ms" [selectedIndex]="0">
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="me-2"></mat-icon>
+            CREAR UNA FAMILIA
+          </ng-template>
+
+          <form [formGroup]="registerForm" (ngSubmit)="onRegisterAndCreate()" class="pt-4">
+            <p class="text-secondary text-center">Crea una cuenta nueva para ti y funda una familia.</p>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Nombre de Usuario</mat-label>
+              <input matInput formControlName="username" required>
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Email</mat-label>
+              <input matInput type="email" formControlName="email" required>
+              <mat-error>Email no válido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Contraseña</mat-label>
+              <input matInput type="password" formControlName="password" required>
+              <mat-error>Mínimo 6 caracteres</mat-error>
+            </mat-form-field>
+
+            <hr class="my-3">
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Nombre de tu Familia</mat-label>
+              <input matInput formControlName="nombreFamilia" required>
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+
+            <div *ngIf="errorMessage" class="error-message">
+              <mat-icon class="error-icon">error_outline</mat-icon>
+              <span>{{ errorMessage }}</span>
+            </div>
+
+            <div class="login-actions">
+              <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="registerForm.invalid">
+                Crear Cuenta y Familia
+              </button>
+            </div>
+          </form>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="me-2"></mat-icon>
+            UNIRSE A UNA FAMILIA
+          </ng-template>
+
+          <form [formGroup]="joinForm" (ngSubmit)="onRegisterAndJoin()" class="pt-4">
+            <p class="text-secondary text-center">Crea una cuenta nueva y únete con un código.</p>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Nombre de Usuario</mat-label>
+              <input matInput formControlName="usernameJoin" required>
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Email</mat-label>
+              <input matInput type="email" formControlName="emailJoin" required>
+              <mat-error>Email no válido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Contraseña</mat-label>
+              <input matInput type="password" formControlName="passwordJoin" required>
+              <mat-error>Mínimo 6 caracteres</mat-error>
+            </mat-form-field>
+
+            <hr class="my-3">
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Código de Invitación</mat-label>
+              <input matInput formControlName="codigoInvitacion" required placeholder="ABC12345">
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+
+            <div *ngIf="joinErrorMessage" class="error-message">
+              <mat-icon class="error-icon">error_outline</mat-icon>
+              <span>{{ joinErrorMessage }}</span>
+            </div>
+
+            <div class="login-actions">
+              <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="joinForm.invalid">
+                Crear Cuenta y Unirse
+              </button>
+            </div>
+          </form>
+        </mat-tab>
+
+      </mat-tab-group>
+
+      <div class="register-link">
+        <span>¿Prefieres una cuenta personal?</span>
+        <a routerLink="/register-personal">Regístrate aquí</a>
+      </div>
+
+    </div>
+  </div>
+</div>

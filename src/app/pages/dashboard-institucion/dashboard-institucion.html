@@ -1,0 +1,121 @@
+<div *ngIf="isLoading" class="text-center p-5" style="min-height: 100vh;">
+  <div class="spinner-border text-success" style="width: 3rem; height: 3rem;"></div>
+  <p class="mt-2 fs-5">Cargando dashboard institucional...</p>
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-warning m-5">
+  {{ errorMessage }}
+</div>
+
+<main class="w-full" *ngIf="!isLoading && dashboardData">
+
+  <div class="w-full overflow-hidden" style="background: var(--gradient);">
+    <section class="container hero-banner">
+      <div class="hero-description">
+        <span class="badge bg-success mb-2 align-self-start" style="font-size: 0.9rem;">{{ dashboardData.tipo | uppercase }}</span>
+
+        <h1 class="display-5 fw-bold mb-4">Bienvenido, <br> {{ dashboardData.nombre }}</h1>
+
+        <p class="fs-5 text-secondary mb-4">
+          Huella Total Institucional (Anual):
+          <strong class="text-dark">{{ dashboardData.huellaTotalInstitucion | number:'1.0-0' }} kg CO2e</strong>
+        </p>
+
+        <a class="btn btn-lg btn-light fs-6 fw-bold py-3 px-4 shadow-sm" routerLink="/actividades/crear-actividad">
+          Registrar Actividad
+          <i class="fa-solid fa-arrow-right ms-2"></i>
+        </a>
+      </div>
+      <img class="w-full planet" src="assets/imagenes/institucion.png" alt="Institución"
+           onerror="this.src='assets/imagenes/planeta.png'" />
+    </section>
+  </div>
+
+  <section class="container banner_how">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <h2 class="fs-2 fw-bold text-green mb-3">Gestiona tu Comunidad</h2>
+        <p class="fs-5 text-secondary mb-3">
+          Comparte este código con estudiantes, empleados y miembros de tu organización para que se unan. ¡Midan el impacto colectivo!
+        </p>
+
+        <div class="codigo-invitacion mb-3">
+          {{ dashboardData.codigoInvitacion }}
+        </div>
+
+        <p class="text-muted small">
+          Administrador: <strong>{{ dashboardData.adminUsername }}</strong>
+        </p>
+      </div>
+      <div class="col-lg-6 text-center">
+        <img src="assets/imagenes/hoja.jpg" alt="Comunidad" class="img-fluid rounded shadow-lg img-how">
+      </div>
+    </div>
+  </section>
+
+  <section class="container banner_ranking bg-light py-5">
+    <h2 class="fs-1 fw-bold text-center text-dark">Impacto de la Comunidad</h2>
+    <p class="fs-5 text-center text-secondary mb-5">
+      Miembros activos contribuyendo al cambio: <strong>{{ dashboardData.totalMiembros }}</strong>
+    </p>
+
+    <div class="banner_ranking_content" style="justify-content: center;">
+
+      <div class="member-list-container" style="width: 100%; max-width: 800px;">
+        <h4 class="fs-5 fw-bold text-green mb-3 px-3">Actividad Reciente</h4>
+
+        <ul class="list-group list-group-flush shadow-sm rounded">
+
+          <li *ngIf="dashboardData.feedActividades.length === 0" class="list-group-item text-center p-4 text-muted">
+            Aún no hay actividades registradas. ¡Anima a tu comunidad a empezar!
+          </li>
+
+          <li *ngFor="let act of dashboardData.feedActividades" class="list-group-item d-flex justify-content-between align-items-center p-3">
+            <div>
+              <i class="fas fa-check-circle text-success me-2"></i>
+              <strong>{{ act.username }}</strong> registró: "{{ act.descripcion }}"
+            </div>
+            <span class="badge bg-light text-dark border">{{ act.fecha | date:'dd/MM' }}</span>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="container banner_resources py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 text-center">
+        <img src="assets/imagenes/recursos-educativos.jpg" alt="Recursos Educativos" class="img-fluid rounded shadow-lg">
+      </div>
+      <div class="col-lg-6">
+        <h2 class="fs-2 fw-bold text-green mb-3">Educación Ambiental</h2>
+        <p class="fs-5 text-secondary mb-4">El conocimiento es el primer paso. Promueve la conciencia ambiental en tu institución con nuestra biblioteca de recursos.</p>
+        <a class="btn btn-lg btn-success text-white d-inline-flex align-items-center gap-2 py-3 px-4" routerLink="/recursos">
+          Explorar Recursos
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mission-vision-section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card h-100 p-4">
+            <h2 class="font-title-lg text-dark">Misión</h2>
+            <p class="font-text-sm-bold">Educar y fomentar un comportamiento ecológico responsable permitiendo a los usuarios medir, monitorear y reducir su huella de carbono. Buscamos generar un cambio positivo y crear una comunidad comprometida con la mitigación del cambio climático.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100 p-4">
+            <h2 class="font-title-lg text-dark">Visión</h2>
+            <p class="font-text-sm-bold">Ser la plataforma digital más influyente y accesible para ayudar a las personas a sensibilizarse sobre su impacto ambiental. Nuestra visión incluye dar soporte global e integrar servicios para empresas y gobiernos, ayudando en la toma de decisiones y políticas sostenibles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>

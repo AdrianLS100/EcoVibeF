@@ -1,0 +1,58 @@
+<app-header></app-header>
+
+<main class="container my-5">
+  <div class="text-center col-md-8 mx-auto">
+    <h1 class="text-center text-green fw-bold mb-3">
+      <i class="fas fa-users me-2"></i> Ranking de Familias
+    </h1>
+    <p class="text-center fs-5 text-secondary">
+      ¡Compite con otras familias! La familia con la menor huella combinada lidera la tabla.
+    </p>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center p-5">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;"></div>
+  </div>
+
+  <div *ngIf="!isLoading" class="ranking-container shadow-sm mt-5">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+      <tr>
+        <th scope="col" class="text-center" style="width: 10%;">#</th>
+        <th scope="col">Familia</th>
+        <th scope="col" class="text-center">Miembros</th>
+        <th scope="col" class="text-center text-success" style="width: 25%;">Huella Total (kg)</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngIf="rankingList.length === 0">
+        <td colspan="4" class="text-center text-secondary py-4">
+          Aún no hay familias en el ranking.
+        </td>
+      </tr>
+
+      <tr *ngFor="let fam of rankingList">
+        <td class="fs-4 fw-bold text-center">
+          <span *ngIf="fam.rank === 1">🥇</span>
+          <span *ngIf="fam.rank === 2">🥈</span>
+          <span *ngIf="fam.rank === 3">🥉</span>
+          <span *ngIf="fam.rank > 3">{{ fam.rank }}</span>
+        </td>
+        <td class="fw-medium fs-5">
+          Familia {{ fam.nombreFamilia }}
+        </td>
+        <td class="text-center">
+          <span class="badge bg-secondary rounded-pill">{{ fam.cantidadMiembros }}</span>
+        </td>
+        <td class="fw-bold fs-5 text-success text-center">
+          {{ fam.huellaTotalFamilia | number:'1.2-2' }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-center mt-4">
+    <a routerLink="/ranking" class="btn btn-outline-success">Ver Ranking Personal</a>
+  </div>
+</main>

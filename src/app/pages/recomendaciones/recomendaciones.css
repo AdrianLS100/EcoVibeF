@@ -1,0 +1,32 @@
+.text-green { color: #004d40; }
+
+.rec-card {
+  border: 1px solid #eee;
+  border-left: 5px solid #eee; /* Borde izquierdo de color */
+  transition: transform 0.2s;
+}
+
+.rec-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Colores según urgencia */
+.rec-card.ALTO { border-left-color: #dc3545; }
+.rec-card.ALTO .icon-box { color: #dc3545; background-color: #ffe6e6; }
+
+.rec-card.MEDIO { border-left-color: #ffc107; }
+.rec-card.MEDIO .icon-box { color: #d39e00; background-color: #fff9db; }
+
+.rec-card.BAJO { border-left-color: #198754; }
+.rec-card.BAJO .icon-box { color: #198754; background-color: #d1e7dd; }
+
+.icon-box {
+  font-size: 1.8rem;
+  min-width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

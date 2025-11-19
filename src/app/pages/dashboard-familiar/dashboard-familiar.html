@@ -1,0 +1,99 @@
+<div *ngIf="isLoading" class="text-center p-5" style="min-height: 100vh;">
+  <div class="spinner-border text-success" style="width: 3rem; height: 3rem;"></div>
+  <p class="mt-2 fs-5">Cargando tu dashboard familiar...</p>
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-warning m-5">
+  {{ errorMessage }}
+</div>
+
+<main class="w-full" *ngIf="!isLoading && dashboardData">
+
+  <div class="w-full overflow-hidden" style="background: var(--gradient);">
+    <section class="container hero-banner">
+      <div class="hero-description">
+        <h1 class="display-5 fw-bold mb-4">Bienvenida, <br> Familia {{ dashboardData.nombreFamilia }}</h1>
+        <p class="fs-5 text-secondary mb-4">
+          Huella Total (Anual):
+          <strong class="text-dark">{{ dashboardData.huellaTotalFamiliaKg | number:'1.0-0' }} kg CO2e</strong>
+        </p>
+        <a class="btn btn-lg btn-light fs-6 fw-bold py-3 px-4 shadow-sm" routerLink="/actividades/crear-actividad">
+          Registrar Actividad Hoy
+          <i class="fa-solid fa-arrow-right ms-2"></i>
+        </a>
+      </div>
+      <img class="w-full planet" src="assets/imagenes/planeta.png" alt="Planeta Tierra" />
+    </section>
+  </div>
+
+  <section class="container banner_how"> <div class="row align-items-center g-5">
+    <div class="col-lg-6">
+      <h2 class="fs-2 fw-bold text-green mb-3">Invita a tu Familia</h2>
+      <p class="fs-5 text-secondary mb-3">Comparte este código con tus familiares para que se unan a este grupo al momento de registrarse. ¡Mientras más registren, mejor!</p>
+      <div class="codigo-invitacion"> {{ dashboardData.codigoInvitacion }}
+      </div>
+    </div>
+    <div class="col-lg-6 text-center">
+      <img src="assets/imagenes/familia-ecovibe.png" alt="Familia" class="img-fluid rounded shadow-lg img-how">
+    </div>
+  </div>
+  </section>
+
+  <section class="container banner_ranking bg-light py-5">
+    <h2 class="fs-1 fw-bold text-center text-dark">Miembros de la Familia</h2>
+    <p class="fs-5 text-center text-secondary mb-5">
+      El administrador de la familia es: <strong>{{ dashboardData.adminUsername }}</strong>
+    </p>
+
+    <div class="banner_ranking_content">
+      <div class="member-list-container"> <ul class="list-group list-group-flush shadow-sm">
+        <li *ngIf="dashboardData.miembrosUsernames.length === 0" class="list-group-item text-center p-3 text-secondary">
+          Aún no hay miembros. ¡Comparte el código!
+        </li>
+        <li *ngFor="let miembro of dashboardData.miembrosUsernames" class="list-group-item d-flex justify-content-between align-items-center p-3 fs-5">
+          <div>
+            <i class="fas fa-user-circle text-muted me-2"></i>
+            {{ miembro }}
+          </div>
+          <span *ngIf="miembro === dashboardData.adminUsername" class="badge bg-success ms-2">Admin</span>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="container banner_resources py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 text-center">
+        <img src="assets/imagenes/recursos-educativos.jpg" alt="Recursos Educativos" class="img-fluid rounded shadow-lg">
+      </div>
+      <div class="col-lg-6">
+        <h2 class="fs-2 fw-bold text-green mb-3">Recursos Educativos</h2>
+        <p class="fs-5 text-secondary mb-4">El conocimiento es el primer paso para el cambio. Explora nuestra biblioteca de artículos, videos y guías para aprender cómo puedes reducir tu impacto ambiental de forma efectiva.</p>
+        <a class="btn btn-lg btn-success text-white d-inline-flex align-items-center gap-2 py-3 px-4" routerLink="/recursos">
+          Explorar Recursos
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mission-vision-section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card h-100 p-4">
+            <h2 class="font-title-lg text-dark">Misión</h2>
+            <p class="font-text-sm-bold">Educar y fomentar un comportamiento ecológico responsable permitiendo a los usuarios medir, monitorear y reducir su huella de carbono. Buscamos generar un cambio positivo y crear una comunidad comprometida con la mitigación del cambio climático.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100 p-4">
+            <h2 class="font-title-lg text-dark">Visión</h2>
+            <p class="font-text-sm-bold">Ser la plataforma digital más influyente y accesible para ayudar a las personas a sensibilizarse sobre su impacto ambiental. Nuestra visión incluye dar soporte global e integrar servicios para empresas y gobiernos, ayudando en la toma de decisiones y políticas sostenibles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

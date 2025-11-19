@@ -1,0 +1,138 @@
+<div class="login-page-wrapper">
+  <div class="login-container mat-elevation-z8">
+
+    <div class="login-branding-panel">
+      <div class="branding-content">
+        <img src="assets/imagenes/logo-ecovibe.png" alt="EcoVibe Logo" class="logo">
+        <h1>Cuenta Institucional</h1>
+        <p>Transforma tu organización y mide su impacto.</p>
+      </div>
+    </div>
+
+    <div class="login-form-panel">
+
+      <mat-tab-group animationDuration="500ms">
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="me-2"></mat-icon> CREAR
+          </ng-template>
+
+          <form [formGroup]="createForm" (ngSubmit)="onCreate()" class="pt-4">
+            <p class="text-secondary text-center mb-3">Registra tu cuenta de administrador y da de alta tu institución.</p>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Nombre de Usuario</mat-label>
+              <input matInput formControlName="username" required>
+              <mat-icon matSuffix></mat-icon>
+              <mat-error *ngIf="createForm.get('username')?.hasError('required')">Requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Email</mat-label>
+              <input matInput type="email" formControlName="email" required>
+              <mat-icon matSuffix></mat-icon>
+              <mat-error>Email no válido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Contraseña</mat-label>
+              <input matInput type="password" formControlName="password" required>
+              <mat-icon matSuffix></mat-icon>
+              <mat-error>Mínimo 6 caracteres</mat-error>
+            </mat-form-field>
+
+            <hr class="my-3">
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Nombre de la Institución</mat-label>
+              <input matInput formControlName="nombreInst" required placeholder="Ej: Colegio San Agustín">
+              <mat-icon matSuffix></mat-icon>
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tipo de Institución</mat-label>
+              <mat-select formControlName="tipoInst" required>
+                <mat-option value="Colegio">Colegio</mat-option>
+                <mat-option value="Universidad">Universidad</mat-option>
+                <mat-option value="Empresa">Empresa</mat-option>
+                <mat-option value="Organización">Organización</mat-option>
+              </mat-select>
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+
+            <div *ngIf="errorMessage" class="error-message">
+              <mat-icon class="error-icon">error_outline</mat-icon>
+              <span>{{ errorMessage }}</span>
+            </div>
+
+            <div class="login-actions">
+              <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="createForm.invalid">
+                Crear Institución
+              </button>
+            </div>
+          </form>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="me-2"></mat-icon> UNIRSE
+          </ng-template>
+
+          <form [formGroup]="joinForm" (ngSubmit)="onJoin()" class="pt-4">
+            <p class="text-secondary text-center mb-3">Crea tu cuenta y únete con el código de tu organización.</p>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Nombre de Usuario</mat-label>
+              <input matInput formControlName="usernameJoin" required>
+              <mat-icon matSuffix></mat-icon>
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Email</mat-label>
+              <input matInput type="email" formControlName="emailJoin" required>
+              <mat-icon matSuffix></mat-icon>
+              <mat-error>Email no válido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tu Contraseña</mat-label>
+              <input matInput type="password" formControlName="passwordJoin" required>
+              <mat-icon matSuffix></mat-icon>
+              <mat-error>Mínimo 6 caracteres</mat-error>
+            </mat-form-field>
+
+            <hr class="my-3">
+
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Código de Invitación (INST-XXXX)</mat-label>
+              <input matInput formControlName="codigoInvitacion" required placeholder="Ej: INST-A1B2">
+              <mat-icon matSuffix></mat-icon>
+              <mat-error>Requerido</mat-error>
+            </mat-form-field>
+
+            <div *ngIf="joinErrorMessage" class="error-message">
+              <mat-icon class="error-icon">error_outline</mat-icon>
+              <span>{{ joinErrorMessage }}</span>
+            </div>
+
+            <div class="login-actions">
+              <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="joinForm.invalid">
+                Unirse a Institución
+              </button>
+            </div>
+          </form>
+        </mat-tab>
+
+      </mat-tab-group>
+
+      <div class="register-link">
+        <span>¿Prefieres una cuenta personal?</span>
+        <a routerLink="/register-personal">Regístrate aquí</a>
+      </div>
+
+    </div>
+  </div>
+</div>

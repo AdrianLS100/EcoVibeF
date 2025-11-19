@@ -1,0 +1,202 @@
+:host {
+  display: block;
+  height: 100vh;
+  background-color: #f4f7f6;
+  background-image: linear-gradient(to top right, #e0f2f1, #f8f8d4);
+}
+
+.login-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.login-container {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  max-width: 900px;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
+
+/* --- Columna Izquierda (Branding) --- */
+.login-branding-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: white;
+  text-align: center;
+  /* (Asegúrate de que esta ruta sea correcta) */
+  background-size: cover;
+  background-position: center;
+}
+
+.login-branding-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(46, 125, 50, 0.85), rgba(0, 77, 64, 0.9));
+  z-index: 1;
+}
+
+.branding-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.branding-content .logo {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 1.5rem;
+  filter: brightness(0) invert(1); /* Hace el logo blanco */
+}
+
+.branding-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.branding-content p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* --- Columna Derecha (Formulario/Opciones) --- */
+.login-form-panel {
+  display: flex;
+  flex-direction: column; /* Para alinear el link de "inicia sesión" */
+  justify-content: center;
+  padding: 3rem;
+}
+
+.login-form-panel h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #004d40; /* Verde oscuro */
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.login-form-panel p.text-secondary {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* --- Estilos de los Botones de Selección --- */
+.account-option-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 1.25rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.account-option-card:hover {
+  background-color: #f8f9fa;
+  border-color: #00796b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.account-option-card i {
+  font-size: 1.5rem;
+  color: #00796b;
+  width: 30px; /* Ancho fijo para el icono */
+}
+
+.account-option-card .fa-chevron-right {
+  font-size: 1rem;
+  color: #adb5bd;
+  margin-left: auto;
+}
+
+.account-option-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-option-text strong {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.account-option-text span {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* Opción deshabilitada */
+.account-option-card.disabled {
+  background-color: #f8f9fa;
+  opacity: 0.6;
+  cursor: not-allowed;
+  border-color: #eee;
+}
+
+.account-option-card.disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Link de "Inicia sesión" */
+.register-link {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+  color: #6c757d;
+}
+
+.register-link a {
+  color: #00796b;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* --- Diseño Responsivo --- */
+@media (max-width: 900px) {
+  .login-page-wrapper {
+    padding: 1rem;
+  }
+  .login-container {
+    grid-template-columns: 1fr;
+  }
+  .login-branding-panel {
+    display: none;
+  }
+  .login-form-panel {
+    padding: 2rem;
+  }
+}
+
+.branding-content .logo {
+  width: 160px;
+  height: 160px;
+  margin-bottom: 1.8rem;
+  filter: brightness(0) invert(1);
+}

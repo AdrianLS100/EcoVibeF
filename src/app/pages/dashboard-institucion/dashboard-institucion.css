@@ -1,0 +1,30 @@
+/* 1. Importamos los estilos base del Home */
+@import '../home/home.css';
+
+/* 2. Estilos específicos para el código de invitación */
+.codigo-invitacion {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00796b; /* Verde principal */
+  background-color: #f0f8f7; /* Verde muy pálido */
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  border: 2px dashed #00796b;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-top: 1rem;
+}
+
+/* 3. Estilo para la lista de miembros (si decidieras mostrarla) */
+.member-list-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.member-list-container .list-group-item {
+  padding: 1.25rem;
+  border-bottom: 1px solid #eee;
+}
