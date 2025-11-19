@@ -2,10 +2,10 @@ import { Component, inject, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
-import Chart from 'chart.js/auto';
+import Chart, {registerables} from 'chart.js/auto';
 import { CalculadoraPersonal } from '../../../models/calculadora-model';
 import { CalculadoraService } from '../../../services/calculadora-service';
-import {LoginService} from '../../../services/login-service';
+import { LoginService} from '../../../services/login-service';
 import {HeaderComponent} from '../../../components/header/header';
 
 @Component({
@@ -30,6 +30,10 @@ export class CalculadoraPersonalComponent {
   @ViewChild('myChart') myChartCanvas?: ElementRef<HTMLCanvasElement>;
   private myChart: Chart | null = null;
 
+  constructor() {
+    Chart.register(...registerables);
+  }
+
   empezar() {
     const userId = this.loginService.getUsuarioId();
     if (!userId) {
@@ -38,44 +42,66 @@ export class CalculadoraPersonalComponent {
       return;
     }
     this.formData.usuarioId = Number(userId);
-    // ---
-
     this.currentStep = 1;
   }
-  siguiente(i:number){ this.currentStep = i + 1; window.scrollTo(0,0); }
-  atras(i:number){ this.currentStep = i - 1; window.scrollTo(0,0); }
+
+  siguiente(pasoActual: number) {
+    this.currentStep = pasoActual + 1;
+    window.scrollTo(0, 0);
+  }
+
+  atras(pasoActual: number) {
+    this.currentStep = pasoActual - 1;
+    window.scrollTo(0, 0);
+  }
 
   finalizar() {
+    // Preparar tipos de reciclaje
     const tipos: string[] = [];
-    Object.entries(this.reciclajeTipos).forEach(([k, v]) => { if (v) tipos.push(k); });
+    if (this.reciclajeTipos.vidrio) tipos.push('vidrio');
+    if (this.reciclajeTipos.plastico) tipos.push('plastico');
+    if (this.reciclajeTipos.aluminio) tipos.push('aluminio');
+    if (this.reciclajeTipos.organicos) tipos.push('organicos');
+    if (this.reciclajeTipos.papel) tipos.push('papel');
+    if (this.reciclajeTipos.ninguno) tipos.push('ninguno');
     this.formData.tiposReciclaje = tipos;
 
     this.currentStep = 6;
     this.isLoading = true;
+    window.scrollTo(0, 0);
 
     this.calculadoraService.calcular(this.formData).subscribe({
-      next: (r) => {
-        this.resultados = r;
+      next: (resultadosCalculados) => {
+        this.resultados = resultadosCalculados;
         this.isLoading = false;
-
-        // Espera a que Angular pinte el canvas y dibuja
-        setTimeout(() => this.dibujarGrafica(), 0);
       },
-      error: (e) => { console.error(e); this.isLoading = false; alert('Error al calcular'); }
+      error: (err) => {
+        console.error("Error al calcular la huella:", err);
+        alert("Hubo un error al calcular: " + err.message);
+        this.isLoading = false;
+      }
     });
   }
 
-  volverAlInicio(){
+  volverAlInicio() {
+    const rol = this.loginService.getRole();
+
+    if (rol === 'ROLE_FAMILIAR') {
+      alert("¡Cálculo guardado! Tu huella se ha sumado al total de tu familia.");
+      this.router.navigate(['/home']); // Va al Dashboard Familiar
+    } else {
+      // Si es ROLE_USER
+      this.router.navigate(['/home']); // Va al Home Personal
+    }
+
     this.formData = new CalculadoraPersonal();
     this.resultados = null;
-    if (this.myChart) { this.myChart.destroy(); this.myChart = null; }
     this.currentStep = 0;
   }
 
   private dibujarGrafica(){
     if (!this.resultados || !this.myChartCanvas) return;
 
-    // Asegura números (por si llegan como string)
     const data = [
       Number(this.resultados.totalTransporteTon ?? 0),
       Number(this.resultados.totalEnergiaTon ?? 0),

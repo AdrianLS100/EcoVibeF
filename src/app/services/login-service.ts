@@ -55,4 +55,8 @@ export class LoginService {
   getUsuarioId(): string | null { return localStorage.getItem('usuarioId'); }
   isLoggedIn(): boolean { return this.getToken() != null; }
   logout(): void { localStorage.clear(); }
+
+  getRole(): string | null {
+    return localStorage.getItem('rol');
+  }
 }

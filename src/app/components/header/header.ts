@@ -91,8 +91,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    console.log("Cerrando sesión desde el header...");
+    console.log("Cerrando sesión...");
     this.loginService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']); // Redirige al login
   }
 }

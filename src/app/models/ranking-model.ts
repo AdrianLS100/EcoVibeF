@@ -8,3 +8,10 @@ export class Ranking {
   huellaAlimentacion: number;
   huellaResiduos: number;
 }
+
+export class RankingFamiliar {
+  rank: number;
+  nombreFamilia: string;
+  cantidadMiembros: number;
+  huellaTotalFamilia: number;
+}

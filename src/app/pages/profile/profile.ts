@@ -19,7 +19,7 @@ import { HeaderComponent} from '../../components/header/header';
   selector: 'app-profile',
   standalone: true,
   imports: [
-    CommonModule, RouterLink, ReactiveFormsModule, HeaderComponent,
+    CommonModule, ReactiveFormsModule, HeaderComponent,
     MatTabsModule, MatCardModule, MatFormFieldModule, MatInputModule,
     MatButtonModule, MatIconModule, MatProgressSpinnerModule
   ],

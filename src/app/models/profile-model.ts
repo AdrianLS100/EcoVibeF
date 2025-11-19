@@ -3,6 +3,7 @@ export class Profile {
   username: string;
   email: string;
   huellaTotalKgCO2e: number;
+  nombreFamilia?: string;
 }
 
 export class UpdatePassword {

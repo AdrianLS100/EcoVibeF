@@ -13,7 +13,7 @@
                 Servicios
               </span>
               <ul class="dropdown-menu mt-2 shadow-lg dropdown-menu--header__services">
-                <li id="calculatorService"><a class="dropdown-item" routerLink="/calculadora/calculadora-personal" style="white-space: pre-wrap;">Calculadora de huella de carbono</a></li>
+                <li id="calculatorService"><a class="dropdown-item" routerLink="/calculadora-personal" style="white-space: pre-wrap;">Calculadora de huella de carbono</a></li>
                 <li id="activeService"><a class="dropdown-item" routerLink="/actividades/crear-actividad"
                                           style="white-space: pre-wrap;">Registro de actividades diarias</a></li>
                 <li><a class="dropdown-item" routerLink="/tienda" style="white-space: pre-wrap;">Tienda</a></li>
@@ -69,13 +69,11 @@
               </ul>
             </div>
 
-            <!-- Menú de Perfil (Móvil) -->
             <div class="d-flex flex-column gap-3 d-lg-none w-100">
               <a class="nav-link" href="#">
                 <i class="fas fa-user"></i>
                 <span class="fs-6">Perfil</span>
               </a>
-              <!-- Llama a la función logout() de home.component.ts -->
               <button type="button" class="btn btn-sm btn-danger mb-2" (click)="logout()">
                 Cerrar sesión
               </button>
@@ -83,23 +81,31 @@
 
           </div>
         </div>
-        <!-- ======================= FIN DE LA CORRECCIÓN ======================= -->
-
       </div>
     </div>
   </nav>
 </header>
 
-<main class="w-full">
+<div *ngIf="userRole === 'ROLE_FAMILIAR'">
+  <app-dashboard-familiar></app-dashboard-familiar>
+</div>
+
+<div *ngIf="userRole === 'ROLE_INSTITUCION'">
+  <app-dashboard-institucion></app-dashboard-institucion>
+</div>
+
+<main class="w-full" *ngIf="userRole === 'ROLE_USER'">
+
   <div class="w-full overflow-hidden" style="background: var(--gradient);">
     <section class="container hero-banner">
       <div class="hero-description">
         <h1 class="fs-2 fw-bold text-secondary">Calcula tu huella de carbono, comprometete a reducirla</h1>
-        <a class="btn btn-lg btn-light fs-6" routerLink="/calculadora/calculadora-personal">Mide tu huella de carbono</a>
+        <a class="btn btn-lg btn-light fs-6" routerLink="/calculadora-personal">Mide tu huella de carbono</a>
       </div>
       <img class="w-full planet" src="assets/imagenes/planeta.png" />
     </section>
   </div>
+
   <section class="container banner_how">
     <div class="row align-items-center g-5">
       <div class="col-lg-6">
@@ -127,19 +133,56 @@
     <p class="fs-5 text-center text-secondary mb-5">¡Compite con tus amigos y con tu distrito por los primeros lugares!</p>
 
     <div class="banner_ranking_content">
-      <div class="podium">
-        <div class="podium_content">
-          <div class="circle overflow-hidden"><img class="w-100 object-fit-cover" src="assets/img/jeyson.jpg" alt="jeyson"></div>
-          <div class="podium-item podium-item-3"><div class="fs-6">#3</div><div class="fs-6">Jeyson Orellano</div></div>
+
+      <div class="podium" *ngIf="topRanking.length > 0; else noRanking">
+
+        <div class="podium_content" *ngIf="topRanking[2]">
+          <div class="circle overflow-hidden">
+            <img class="w-100 object-fit-cover" [src]="getAvatar(topRanking[2].username)" [alt]="topRanking[2].username">
+          </div>
+          <div class="podium-item podium-item-3">
+            <div class="fs-6">#3</div>
+            <div class="fs-6 text-truncate" style="max-width: 100px;">{{ topRanking[2].username }}</div>
+            <small>{{ topRanking[2].huellaKgCO2e | number:'1.0-0' }} kg</small>
+          </div>
         </div>
-        <div class="podium_content">
-          <div class="circle overflow-hidden"><img class="w-100 object-fit-cover" src="assets/img/juan.jpeg" alt="juan"></div>
-          <div class="podium-item podium-item-1"><div class="fs-6">#1</div><div class="fs-6">Juan Torres</div></div>
+
+        <div class="podium_content" *ngIf="topRanking[0]">
+          <div class="circle overflow-hidden" style="border-color: #ffd700;"> <img class="w-100 object-fit-cover" [src]="getAvatar(topRanking[0].username)" [alt]="topRanking[0].username">
+          </div>
+          <div class="podium-item podium-item-1">
+            <div class="fs-5">#1</div>
+            <div class="fs-6 fw-bold">{{ topRanking[0].username }}</div>
+            <small class="fw-bold">{{ topRanking[0].huellaKgCO2e | number:'1.0-0' }} kg</small>
+          </div>
         </div>
-        <div class="podium_content">
-          <div class="circle overflow-hidden"><img class="w-100 object-fit-cover" src="assets/img/fernando.jpeg" alt="Fernando"></div>
-          <div class="podium-item podium-item-2"><div class="fs-6">#2</div><div class="fs-6">Fernando Ortiz</div></div>
+
+        <div class="podium_content" *ngIf="topRanking[1]">
+          <div class="circle overflow-hidden">
+            <img class="w-100 object-fit-cover" [src]="getAvatar(topRanking[1].username)" [alt]="topRanking[1].username">
+          </div>
+          <div class="podium-item podium-item-2">
+            <div class="fs-6">#2</div>
+            <div class="fs-6 text-truncate" style="max-width: 100px;">{{ topRanking[1].username }}</div>
+            <small>{{ topRanking[1].huellaKgCO2e | number:'1.0-0' }} kg</small>
+          </div>
         </div>
+
+      </div>
+
+      <ng-template #noRanking>
+        <div class="text-center p-4 bg-light rounded">
+          <p class="text-secondary">Aún no hay suficientes datos para el ranking.</p>
+          <p class="small">¡Sé el primero en calcular tu huella!</p>
+        </div>
+      </ng-template>
+
+      <div class="info-panel">
+        <p class="fs-6 fw-bold">Inicia sesión y registra tus actividades diarias para ganar experiencia (xp) y competir con tus amigos por los primeros lugares!</p>
+        <a class="btn btn-lg btn-success d-flex align-items-center gap-2" routerLink="/actividades/crear-actividad">
+          Registro de actividades
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
       </div>
     </div>
   </section>
@@ -152,7 +195,7 @@
       <div class="col-lg-6">
         <h2 class="fs-2 fw-bold text-green mb-3">Recursos Educativos</h2>
         <p class="fs-5 text-secondary mb-4">El conocimiento es el primer paso para el cambio. Explora nuestra biblioteca de artículos, videos y guías para aprender cómo puedes reducir tu impacto ambiental de forma efectiva.</p>
-        <a class="btn btn-lg btn-success text-white d-inline-flex align-items-center gap-2 py-3 px-4" routerLink="/recursoeducativo">
+        <a class="btn btn-lg btn-success text-white d-inline-flex align-items-center gap-2 py-3 px-4" routerLink="/recursos">
           Explorar Recursos
           <i class="fa-solid fa-arrow-right"></i>
         </a>

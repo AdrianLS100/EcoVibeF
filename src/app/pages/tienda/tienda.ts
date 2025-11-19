@@ -85,7 +85,7 @@ export class TiendaComponent implements OnInit {
     }
 
     const request: CanjearRequest = {
-      usuarioId: USUARIO_ID, // 9. Usamos el ID real
+      usuarioId: USUARIO_ID, 
       recompensaId: recompensa.id
     };
 

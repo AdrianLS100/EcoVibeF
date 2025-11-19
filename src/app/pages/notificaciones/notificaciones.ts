@@ -14,7 +14,6 @@ import { HeaderComponent} from '../../components/header/header';
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     HeaderComponent,
     DatePipe
   ],
