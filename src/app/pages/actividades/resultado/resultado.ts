@@ -1,13 +1,13 @@
 import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Router, RouterLink} from '@angular/router';
+import { Router } from '@angular/router';
 
 import { RegistroStateService} from '../../../services/registro-state';
 import { ReporteService} from '../../../services/reporte-service';
-import { GamificacionService} from '../../../services/gamificacion-service';
+import { GamificacionService } from '../../../services/gamificacion-service';
+import { LoginService } from '../../../services/login-service';
 
-import { Reporte} from '../../../models/reporte-model';
-
+import { Reporte } from '../../../models/reporte-model';
 import { Chart, registerables } from 'chart.js/auto';
 import {HeaderComponent} from '../../../components/header/header';
 
@@ -24,10 +24,11 @@ export class ResultadoComponent implements OnInit {
   private registroState = inject(RegistroStateService);
   private reporteService = inject(ReporteService);
   private gamificacionService = inject(GamificacionService);
+  private loginService = inject(LoginService);
 
   public reporte: Reporte | null = null;
   public isLoading = true;
-  public puntosGanados: number = 0; // Para mostrar "+X Puntos"
+  public puntosGanados: number = 0;
 
   private actividadId: number | null = null;
   private myChart: Chart | null = null;
@@ -69,22 +70,25 @@ export class ResultadoComponent implements OnInit {
       error: (err) => {
         console.error("Error al obtener el reporte:", err);
         this.isLoading = false;
-        this.registroState.limpiar(); // Limpiar también si hay error
+        this.registroState.limpiar();
         alert("Hubo un error al calcular tu resultado.");
       }
     });
   }
 
   otorgarPuntosPorActividad() {
-    const USUARIO_ID = 1;
+    const userIdString = this.loginService.getUsuarioId();
 
-    if (!this.actividadId) return; // Seguridad
+    if (!userIdString || !this.actividadId) {
+      console.error("No se pudo otorgar puntos: Falta Usuario ID o Actividad ID");
+      return;
+    }
+
+    const USUARIO_ID = Number(userIdString);
 
     this.gamificacionService.otorgarPuntosPorActividad(this.actividadId, USUARIO_ID).subscribe({
       next: (estado) => {
         console.log(`Puntos otorgados: ${estado.puntosGanados}. Nuevo total: ${estado.puntosTotales}`);
-
-        // ¡Guardamos los puntos ganados para mostrarlos en el HTML!
         this.puntosGanados = estado.puntosGanados;
       },
       error: (err) => {
@@ -101,9 +105,7 @@ export class ResultadoComponent implements OnInit {
 
   crearGrafica(ctx: HTMLCanvasElement) {
     if (!this.reporte) return;
-    if (this.myChart) {
-      this.myChart.destroy(); // Limpia la gráfica anterior
-    }
+    if (this.myChart) this.myChart.destroy();
 
     this.myChart = new Chart(ctx, {
       type: 'pie',
@@ -115,22 +117,14 @@ export class ResultadoComponent implements OnInit {
             this.reporte.energiaKgCO2e,
             this.reporte.residuosKgCO2e
           ],
-          backgroundColor: [
-            '#CCEAEF',
-            '#FFE6C8',
-            '#DFFFC2'
-          ],
+          backgroundColor: ['#CCEAEF', '#FFE6C8', '#DFFFC2'],
           borderColor: '#ffffff',
           borderWidth: 2
         }]
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: {
-            display: false
-          }
-        }
+        plugins: { legend: { display: false } }
       }
     });
   }

@@ -4,6 +4,7 @@ export class Profile {
   email: string;
   huellaTotalKgCO2e: number;
   nombreFamilia?: string;
+  nombreInstitucion?: string;
 }
 
 export class UpdatePassword {

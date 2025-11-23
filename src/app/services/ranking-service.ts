@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Ranking } from '../models/ranking-model';
+import {Ranking, RankingInstitucional} from '../models/ranking-model';
 import { RankingFamiliar} from '../models/ranking-model';
 import {Observable} from 'rxjs';
 
@@ -25,5 +25,9 @@ export class RankingService {
 
   getRankingFamiliar(): Observable<RankingFamiliar[]> {
     return this.http.get<RankingFamiliar[]>(`${this.apiUrl}/familiar`);
+  }
+
+  getRankingInstitucional(): Observable<RankingInstitucional[]> {
+    return this.http.get<RankingInstitucional[]>(`${this.apiUrl}/institucional`);
   }
 }

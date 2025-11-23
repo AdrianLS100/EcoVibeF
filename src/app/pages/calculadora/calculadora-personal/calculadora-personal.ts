@@ -84,18 +84,29 @@ export class CalculadoraPersonalComponent {
   }
 
   volverAlInicio() {
-    const rol = this.loginService.getRole();
+    const rol = localStorage.getItem('rol');
 
     if (rol === 'ROLE_FAMILIAR') {
-      alert("¡Cálculo guardado! Tu huella se ha sumado al total de tu familia.");
-      this.router.navigate(['/home']); // Va al Dashboard Familiar
-    } else {
-      // Si es ROLE_USER
-      this.router.navigate(['/home']); // Va al Home Personal
+      alert("¡Excelente! Tu huella individual se ha sumado al total de tu familia.");
     }
+    // --- ¡NUEVA CONDICIÓN! ---
+    else if (rol === 'ROLE_INSTITUCION') {
+      alert("¡Gracias! Tu aporte se ha sumado a la huella de tu institución.");
+    }
+    // ------------------------
+    else {
+      console.log("Huella personal guardada.");
+    }
+
+    this.router.navigate(['/home']);
 
     this.formData = new CalculadoraPersonal();
     this.resultados = null;
+
+    if (this.myChart) {
+      this.myChart.destroy();
+      this.myChart = null;
+    }
     this.currentStep = 0;
   }
 

@@ -15,3 +15,11 @@ export class RankingFamiliar {
   cantidadMiembros: number;
   huellaTotalFamilia: number;
 }
+
+export class RankingInstitucional {
+  rank: number;
+  nombreInstitucion: string;
+  tipo: string;
+  cantidadMiembros: number;
+  huellaTotal: number;
+}
