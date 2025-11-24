@@ -25,6 +25,7 @@ import {RegisterInstitucionComponent} from './pages/register-institucion/registe
 import {RecomendacionesComponent} from './pages/recomendaciones/recomendaciones';
 import {ComparativaPersonalComponent} from './pages/comparativa-personal/comparativa-personal';
 import {QuizComponent} from './pages/quiz/quiz';
+import {RankingInstitucionalComponent} from './pages/ranking/ranking-institucional/ranking-institucional';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -51,6 +52,7 @@ export const routes: Routes = [
 
   { path: 'ranking', component: RankingComponent, canActivate: [authGuard] },
   { path: 'ranking-familiar', component: RankingFamiliarComponent, canActivate: [authGuard] },
+  { path: 'ranking-institucional', component: RankingInstitucionalComponent, canActivate: [authGuard] },
   { path: 'notificaciones', component: NotificacionesPageComponent, canActivate: [authGuard] },
   { path: 'comparativa', component: ComparativaPersonalComponent, canActivate: [authGuard] },
   { path: 'quiz', component: QuizComponent, canActivate: [authGuard] },

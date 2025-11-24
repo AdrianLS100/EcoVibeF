@@ -27,6 +27,7 @@ export class CalculadoraPersonalComponent {
   public reciclajeTipos = { vidrio:false, plastico:false, aluminio:false, organicos:false, papel:false, ninguno:false };
   public isLoading = false;
   public resultados: CalculadoraPersonal | null = null;
+  public arbolesNecesarios: number = 0;
 
   private myChart: any = null;
 
@@ -81,6 +82,9 @@ export class CalculadoraPersonalComponent {
         console.log("Respuesta del Backend:", resultadosCalculados);
 
         this.resultados = resultadosCalculados;
+        if (this.resultados?.totalKgCO2e) {
+          this.arbolesNecesarios = Math.ceil(this.resultados.totalKgCO2e / 25);
+        }
         this.isLoading = false;
         this.cdr.detectChanges();
       },
