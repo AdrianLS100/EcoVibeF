@@ -1,0 +1,81 @@
+<app-header></app-header>
+
+<main class="container my-5 quiz-container">
+
+  <div *ngIf="isLoading" class="text-center p-5">
+    <div class="spinner-border text-success"></div>
+  </div>
+
+  <div *ngIf="!isLoading && !gameStarted && !gameFinished" class="text-center intro-card card shadow p-5">
+    <i class="fas fa-brain text-green fa-4x mb-4"></i>
+    <h1 class="fw-bold text-dark">Quiz Ecológico</h1>
+    <p class="fs-5 text-secondary">Pon a prueba tus conocimientos y gana puntos para la tienda.</p>
+    <button class="btn btn-lg btn-success mt-3" (click)="iniciarJuego()">
+      ¡Jugar Ahora!
+    </button>
+  </div>
+
+  <div *ngIf="gameStarted && !gameFinished" class="game-card card shadow">
+    <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between">
+      <span class="badge bg-light text-dark border">Pregunta {{ currentQuestionIndex + 1 }} / {{ preguntas.length }}</span>
+      <span class="fw-bold text-green">{{ score }} Puntos</span>
+    </div>
+
+    <div class="card-body p-4 text-center">
+      <h3 class="mb-4 fw-bold">{{ preguntas[currentQuestionIndex].enunciado }}</h3>
+
+      <div class="d-grid gap-3 options-grid">
+        <button class="btn btn-outline-secondary btn-lg option-btn"
+                [class.btn-success]="seleccionActual && preguntas[currentQuestionIndex].respuestaCorrecta === 'A'"
+                [class.btn-danger]="seleccionActual === 'A' && respuestaCorrecta === false"
+                (click)="seleccionarOpcion('A')">
+          {{ preguntas[currentQuestionIndex].opcionA }}
+        </button>
+
+        <button class="btn btn-outline-secondary btn-lg option-btn"
+                [class.btn-success]="seleccionActual && preguntas[currentQuestionIndex].respuestaCorrecta === 'B'"
+                [class.btn-danger]="seleccionActual === 'B' && respuestaCorrecta === false"
+                (click)="seleccionarOpcion('B')">
+          {{ preguntas[currentQuestionIndex].opcionB }}
+        </button>
+
+        <button class="btn btn-outline-secondary btn-lg option-btn"
+                [class.btn-success]="seleccionActual && preguntas[currentQuestionIndex].respuestaCorrecta === 'C'"
+                [class.btn-danger]="seleccionActual === 'C' && respuestaCorrecta === false"
+                (click)="seleccionarOpcion('C')">
+          {{ preguntas[currentQuestionIndex].opcionC }}
+        </button>
+
+        <button class="btn btn-outline-secondary btn-lg option-btn"
+                [class.btn-success]="seleccionActual && preguntas[currentQuestionIndex].respuestaCorrecta === 'D'"
+                [class.btn-danger]="seleccionActual === 'D' && respuestaCorrecta === false"
+                (click)="seleccionarOpcion('D')">
+          {{ preguntas[currentQuestionIndex].opcionD }}
+        </button>
+      </div>
+
+      <div class="mt-4" *ngIf="seleccionActual">
+        <div *ngIf="respuestaCorrecta" class="alert alert-success py-2 mb-3">¡Correcto! +{{ preguntas[currentQuestionIndex].puntosOtorgados }} pts</div>
+        <div *ngIf="!respuestaCorrecta" class="alert alert-danger py-2 mb-3">¡Incorrecto!</div>
+
+        <button class="btn btn-dark px-5" (click)="siguientePregunta()">
+          {{ currentQuestionIndex < preguntas.length - 1 ? 'Siguiente' : 'Ver Resultados' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="gameFinished" class="text-center result-card card shadow p-5">
+    <i class="fas fa-trophy text-warning fa-4x mb-3"></i>
+    <h2 class="fw-bold">¡Juego Terminado!</h2>
+
+    <div class="display-4 fw-bold text-green my-3">+{{ score }}</div>
+    <p class="text-secondary">Puntos ganados y añadidos a tu cuenta.</p>
+
+    <div class="d-flex justify-content-center gap-3 mt-4">
+      <button class="btn btn-outline-dark" (click)="cargarQuiz(); iniciarJuego()">Jugar de Nuevo</button>
+      <button class="btn btn-success" (click)="irTienda()">Ir a la Tienda</button>
+    </div>
+  </div>
+
+</main>

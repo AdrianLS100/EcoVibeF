@@ -19,6 +19,24 @@
         +{{ puntosGanados }} POINTS
       </span>
 
+      <div class="text-center mt-3" *ngIf="puntosGanados > 0">
+        <p class="small text-muted mb-2">¡Presume tu logro!</p>
+        <div class="d-flex justify-content-center gap-3">
+
+          <button class="btn btn-outline-success rounded-circle p-2" (click)="compartirLogro('whatsapp')" title="Compartir en WhatsApp">
+            <i class="fab fa-whatsapp fa-lg"></i>
+          </button>
+
+          <button class="btn btn-outline-dark rounded-circle p-2" (click)="compartirLogro('twitter')" title="Compartir en X">
+            <i class="fab fa-twitter fa-lg"></i>
+          </button>
+
+          <button class="btn btn-outline-primary rounded-circle p-2" (click)="compartirLogro('linkedin')" title="Compartir en LinkedIn">
+            <i class="fab fa-linkedin-in fa-lg"></i>
+          </button>
+        </div>
+      </div>
+
     </div>
     <h3 class="my-6 fs-4 fw-bold">Resultados de hoy :</h3>
 

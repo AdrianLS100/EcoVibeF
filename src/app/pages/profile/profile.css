@@ -1,64 +1,261 @@
-.profile-header-card mat-card-content {
+:host {
+  display: block;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding-bottom: 4rem;
+}
+
+.profile-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
+}
+
+/* --- TARJETA DE CABECERA --- */
+.profile-header-card {
+  border-radius: 16px !important;
+  background: white;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.header-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem !important;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Identidad (Izquierda) */
+.identity-section {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  padding: 1rem 0;
-  gap: 1rem;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 280px;
 }
 
-.avatar-section {
-  padding: 1rem 2rem;
-}
-.avatar-icon {
-  font-size: 80px;
-  color: #00796b;
-}
-
-.info-section {
-  flex: 1 1 300px;
-}
-
-.stats-section {
-  padding: 1rem 2rem;
-  text-align: center;
-}
-
-.actions-section {
-  padding: 1rem 2rem;
+.avatar-circle {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #00796b, #4db6ac);
+  color: white;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 121, 107, 0.3);
+}
+
+.user-details h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  line-height: 1.2;
+}
+
+.user-details .email {
+  margin: 0 0 0.8rem 0;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+}
+
+/* Badges de Rol */
+.badges-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.role-badge.familiar {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.role-badge.institucional {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #bbdefb;
+}
+
+.badge-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+
+/* Estadísticas y Acciones (Derecha) */
+.stats-actions-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 0.5rem 1.5rem;
+  border-right: 2px solid #f0f0f0;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #95a5a6;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #00796b;
+}
+
+.stat-number .unit {
+  font-size: 1rem;
+  color: #7f8c8d;
+  font-weight: 500;
 }
 
 .btn-recomendaciones {
-  padding: 1.5rem 2rem !important;
-  font-size: 1.1rem !important;
   border-radius: 50px !important;
-  background-color: #ff9800 !important;
+  padding: 0.6rem 1.5rem !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: #ff9800 !important; /* Naranja llamativo */
   color: white !important;
-  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3) !important;
-  transition: transform 0.2s;
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
 }
-
-.btn-recomendaciones:hover {
-  transform: translateY(-2px);
-  background-color: #f57c00 !important;
-}
-
 .btn-recomendaciones mat-icon {
+  margin-right: 6px;
+}
+
+/* --- PESTAÑAS (TABS) --- */
+.profile-tabs {
+  border-radius: 16px;
+  background: white;
+  overflow: hidden;
+}
+
+::ng-deep .mat-mdc-tab-header {
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.tab-content {
+  padding: 2.5rem;
+}
+
+.tab-title {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  color: #34495e;
+  font-weight: 600;
+}
+
+.tab-icon {
   margin-right: 8px;
 }
 
+.full-width {
+  width: 100%;
+}
+
+/* Alertas y Formularios */
+.security-form {
+  max-width: 500px;
+}
+
+.alert-box {
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.alert-box.success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.alert-box.error {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.form-actions {
+  margin-top: 1.5rem;
+}
+
+/* --- RESPONSIVO --- */
 @media (max-width: 768px) {
-  .profile-header-card mat-card-content {
+  .header-layout {
     flex-direction: column;
-    text-align: center;
+    align-items: flex-start;
+    gap: 1.5rem;
   }
-  .actions-section {
+
+  .stats-actions-section {
     width: 100%;
+    justify-content: space-between;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f0f0f0;
   }
-  .btn-recomendaciones {
-    width: 100%;
+
+  .stat-card {
+    border-right: none;
+    padding-left: 0;
+    text-align: left;
   }
 }
 
+@media (max-width: 500px) {
+  .stats-actions-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    text-align: center;
+  }
+}
+
+/* Animación de entrada */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

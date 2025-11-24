@@ -1,12 +1,12 @@
-import { Component, inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, inject, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
-import Chart, {registerables} from 'chart.js/auto';
+import { Router } from '@angular/router';
+import { Chart, registerables } from 'chart.js/auto';
 import { CalculadoraPersonal } from '../../../models/calculadora-model';
 import { CalculadoraService } from '../../../services/calculadora-service';
-import { LoginService} from '../../../services/login-service';
-import {HeaderComponent} from '../../../components/header/header';
+import { LoginService } from '../../../services/login-service';
+import { HeaderComponent } from '../../../components/header/header';
 
 @Component({
   selector: 'app-calculadora-personal',
@@ -20,6 +20,7 @@ export class CalculadoraPersonalComponent {
   private router = inject(Router);
   private calculadoraService = inject(CalculadoraService);
   private loginService = inject(LoginService);
+  private cdr = inject(ChangeDetectorRef);
 
   public currentStep = 0;
   public formData = new CalculadoraPersonal();
@@ -27,8 +28,14 @@ export class CalculadoraPersonalComponent {
   public isLoading = false;
   public resultados: CalculadoraPersonal | null = null;
 
-  @ViewChild('myChart') myChartCanvas?: ElementRef<HTMLCanvasElement>;
-  private myChart: Chart | null = null;
+  private myChart: any = null;
+
+  @ViewChild('myChart')
+  set myChartCanvas(canvasRef: ElementRef<HTMLCanvasElement>) {
+    if (canvasRef && this.resultados) {
+      setTimeout(() => this.dibujarGrafica(canvasRef.nativeElement), 0);
+    }
+  }
 
   constructor() {
     Chart.register(...registerables);
@@ -56,7 +63,6 @@ export class CalculadoraPersonalComponent {
   }
 
   finalizar() {
-    // Preparar tipos de reciclaje
     const tipos: string[] = [];
     if (this.reciclajeTipos.vidrio) tipos.push('vidrio');
     if (this.reciclajeTipos.plastico) tipos.push('plastico');
@@ -74,10 +80,11 @@ export class CalculadoraPersonalComponent {
       next: (resultadosCalculados) => {
         this.resultados = resultadosCalculados;
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error("Error al calcular la huella:", err);
-        alert("Hubo un error al calcular: " + err.message);
+        console.error("Error al calcular:", err);
+        alert("Hubo un error al calcular.");
         this.isLoading = false;
       }
     });
@@ -85,24 +92,17 @@ export class CalculadoraPersonalComponent {
 
   volverAlInicio() {
     const rol = localStorage.getItem('rol');
-
     if (rol === 'ROLE_FAMILIAR') {
       alert("¡Excelente! Tu huella individual se ha sumado al total de tu familia.");
-    }
-    // --- ¡NUEVA CONDICIÓN! ---
-    else if (rol === 'ROLE_INSTITUCION') {
+    } else if (rol === 'ROLE_INSTITUCION') {
       alert("¡Gracias! Tu aporte se ha sumado a la huella de tu institución.");
-    }
-    // ------------------------
-    else {
+    } else {
       console.log("Huella personal guardada.");
     }
 
     this.router.navigate(['/home']);
-
     this.formData = new CalculadoraPersonal();
     this.resultados = null;
-
     if (this.myChart) {
       this.myChart.destroy();
       this.myChart = null;
@@ -110,25 +110,33 @@ export class CalculadoraPersonalComponent {
     this.currentStep = 0;
   }
 
-  private dibujarGrafica(){
-    if (!this.resultados || !this.myChartCanvas) return;
-
-    const data = [
-      Number(this.resultados.totalTransporteTon ?? 0),
-      Number(this.resultados.totalEnergiaTon ?? 0),
-      Number(this.resultados.totalAlimentacionTon ?? 0),
-      Number(this.resultados.totalResiduosTon ?? 0)
-    ];
+  private dibujarGrafica(ctx: HTMLCanvasElement) {
+    if (!this.resultados) return;
 
     if (this.myChart) this.myChart.destroy();
 
-    this.myChart = new Chart(this.myChartCanvas.nativeElement, {
+    this.myChart = new Chart(ctx, {
       type: 'pie',
       data: {
         labels: ['Transporte', 'Energía', 'Alimentación', 'Residuos'],
-        datasets: [{ data, backgroundColor: ['#CCEAEF','#FFE6C8','#DFFFC2','#F0E6FF'] }]
+        datasets: [{
+          data: [
+            this.resultados.totalTransporteTon,
+            this.resultados.totalEnergiaTon,
+            this.resultados.totalAlimentacionTon,
+            this.resultados.totalResiduosTon
+          ],
+          backgroundColor: ['#CCEAEF', '#FFE6C8', '#DFFFC2', '#F0E6FF'],
+          borderWidth: 1
+        }]
       },
-      options: { responsive: true, plugins: { legend: { display: false } } }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        }
+      }
     });
   }
 }

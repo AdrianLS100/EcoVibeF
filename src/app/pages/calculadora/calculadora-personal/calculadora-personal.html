@@ -3,14 +3,27 @@
 <main class="container mb-4">
   <h1 class="text-center color-green fs-2 fw-bold my-4">Cálculo de Huella de carbono personal</h1>
 
-  <div *ngIf="currentStep === 0" class="text-center p-5 border rounded shadow-sm">
-    <div class="d-flex justify-content-center gap-4 my-5">
-      <i class="fa-solid fa-car fs-1 text-muted"></i>
-      <i class="fa-solid fa-bolt fs-1 text-muted"></i>
-      <i class="fa-solid fa-utensils fs-1 text-muted"></i>
-      <i class="fa-solid fa-trash fs-1 text-muted"></i>
+  <div *ngIf="currentStep === 0" class="text-center p-5 border rounded shadow-sm bg-white">
+    <div class="d-flex justify-content-center gap-5 my-5 text-secondary">
+      <div class="text-center">
+        <i class="fa-solid fa-car fs-1 mb-2"></i>
+        <p class="small">Transporte</p>
+      </div>
+      <div class="text-center">
+        <i class="fa-solid fa-bolt fs-1 mb-2"></i>
+        <p class="small">Energía</p>
+      </div>
+      <div class="text-center">
+        <i class="fa-solid fa-utensils fs-1 mb-2"></i>
+        <p class="small">Alimentación</p>
+      </div>
+      <div class="text-center">
+        <i class="fa-solid fa-trash fs-1 mb-2"></i>
+        <p class="small">Residuos</p>
+      </div>
     </div>
-    <button type="button" class="btn btn-dark btn-lg px-5" (click)="empezar()">EMPEZAR</button>
+    <p class="fs-5 mb-4 text-muted">Completa este cuestionario para conocer tu impacto anual.</p>
+    <button type="button" class="btn btn-dark btn-lg px-5 rounded-pill fw-bold" (click)="empezar()">EMPEZAR</button>
   </div>
 
   <div *ngIf="currentStep > 0" class="container_calc shadow-sm">
@@ -40,174 +53,167 @@
 
       <form #form="ngForm" (ngSubmit)="finalizar()">
 
-        <div *ngIf="currentStep === 1">
-          <h2>¿Cuántas horas a la semana pasas en cada uno de estos transportes?</h2>
+        <div *ngIf="currentStep === 1" class="step-content">
+          <h2 class="mb-4">¿Cuántas horas a la semana pasas en cada uno de estos transportes?</h2>
           <div class="input-group">
             <div>
               <label for="bus">Bus o Combi</label>
-              <input type="number" id="bus" name="bus" placeholder="Ingresa horas"
-                     [(ngModel)]="formData.horasBusSemana" min="0">
+              <input type="number" id="bus" name="bus" placeholder="0" [(ngModel)]="formData.horasBusSemana" min="0">
             </div>
             <div>
               <label for="tren">Tren eléctrico</label>
-              <input type="number" id="tren" name="tren" placeholder="Ingresa horas"
-                     [(ngModel)]="formData.horasTrenSemana" min="0">
+              <input type="number" id="tren" name="tren" placeholder="0" [(ngModel)]="formData.horasTrenSemana" min="0">
             </div>
             <div>
               <label for="metropolitano">Metropolitano</label>
-              <input type="number" id="metropolitano" name="metropolitano" placeholder="Ingresa horas"
-                     [(ngModel)]="formData.horasMetropolitanoSemana" min="0">
+              <input type="number" id="metropolitano" name="metropolitano" placeholder="0" [(ngModel)]="formData.horasMetropolitanoSemana" min="0">
             </div>
             <div>
               <label for="auto">Auto</label>
-              <input type="number" id="auto" name="auto" placeholder="Ingresa horas"
-                     [(ngModel)]="formData.horasAutoSemana" min="0">
+              <input type="number" id="auto" name="auto" placeholder="0" [(ngModel)]="formData.horasAutoSemana" min="0">
             </div>
           </div>
-          <div class="d-flex justify-content-end mt-4">
-            <button type="button" class="btn" (click)="siguiente(1)">SIGUIENTE</button>
+          <div class="d-flex justify-content-end mt-5">
+            <button type="button" class="btn btn-success text-white px-4" (click)="siguiente(1)">SIGUIENTE <i class="fas fa-arrow-right ms-2"></i></button>
           </div>
         </div>
 
-        <div *ngIf="currentStep === 2">
-          <h2 class="fs-4 fw-bold">Consumo de Energía en el Hogar</h2>
+        <div *ngIf="currentStep === 2" class="step-content">
+          <h2 class="fs-4 fw-bold mb-4">Consumo de Energía en el Hogar</h2>
           <div class="input-group">
-            <div>
-              <label for="kwh">¿Cuánto es tu consumo eléctrico doméstico promedio? (en kWh)</label>
-              <input type="number" id="kwh" name="kwh" placeholder="INGRESA CANTIDAD EN kWh"
+            <div class="mb-3">
+              <label for="kwh" class="form-label">¿Cuánto es tu consumo eléctrico doméstico promedio? (en kWh/mes)</label>
+              <input type="number" id="kwh" name="kwh" class="form-control" placeholder="Ej: 150"
                      [(ngModel)]="formData.kwhMes" min="0" required #kwhModel="ngModel">
-              <div *ngIf="kwhModel.invalid && kwhModel.touched" class="text-danger small mt-1">
-                Este campo es requerido.
-              </div>
             </div>
-            <div>
-              <label for="glp">¿Cuántos balones de gas de 10 kg consumes al mes?</label>
-              <input type="number" id="glp" name="glp" placeholder="INGRESA NÚMERO"
+            <div class="mb-3">
+              <label for="glp" class="form-label">¿Cuántos balones de gas de 10 kg consumes al mes?</label>
+              <input type="number" id="glp" name="glp" class="form-control" placeholder="Ej: 1"
                      [(ngModel)]="formData.balonesGlp10kgMes" min="0" required #glpModel="ngModel">
-              <div *ngIf="glpModel.invalid && glpModel.touched" class="text-danger small mt-1">
-                Este campo es requerido.
-              </div>
             </div>
           </div>
-          <div class="btn-nav-group">
-            <button type="button" class="btn btn-secondary" (click)="atras(2)">ATRÁS</button>
-            <button type="button" class="btn" (click)="siguiente(2)"
+          <div class="btn-nav-group mt-5">
+            <button type="button" class="btn btn-outline-secondary" (click)="atras(2)">ATRÁS</button>
+            <button type="button" class="btn btn-success text-white" (click)="siguiente(2)"
                     [disabled]="kwhModel.invalid || glpModel.invalid">SIGUIENTE</button>
           </div>
         </div>
 
-        <div *ngIf="currentStep === 3">
+        <div *ngIf="currentStep === 3" class="step-content">
           <h2 class="fs-5 fw-bold mb-3">¿A cuál de estas tres opciones se aproxima más tu dieta?</h2>
-          <p class="fs-6 mb-4">A la semana, la cantidad de días que como carne son:</p>
-          <div class="radio-group">
-            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="7" [(ngModel)]="formData.diasCarnePorSemana" required> 7 días</label>
-            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="6" [(ngModel)]="formData.diasCarnePorSemana" required> 6 días</label>
-            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="5" [(ngModel)]="formData.diasCarnePorSemana" required> 5 días</label>
-            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="4" [(ngModel)]="formData.diasCarnePorSemana" required> 4 días</label>
-            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="3" [(ngModel)]="formData.diasCarnePorSemana" required> 3 días</label>
-            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="2" [(ngModel)]="formData.diasCarnePorSemana" required> 2 días</label>
-            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="1" [(ngModel)]="formData.diasCarnePorSemana" required> 1 día</label>
-            <label><input type="radio" class="form-check-input" name="diasCarne" [value]="0" [(ngModel)]="formData.diasCarnePorSemana" required> Ninguno</label>
+          <p class="fs-6 mb-4 text-muted">A la semana, la cantidad de días que como carne son:</p>
+          <div class="radio-group d-flex flex-column gap-2">
+            <label class="radio-label"><input type="radio" class="form-check-input me-2" name="diasCarne" [value]="7" [(ngModel)]="formData.diasCarnePorSemana" required> 7 días (Omnívoro frecuente)</label>
+            <label class="radio-label"><input type="radio" class="form-check-input me-2" name="diasCarne" [value]="5" [(ngModel)]="formData.diasCarnePorSemana" required> 5 días</label>
+            <label class="radio-label"><input type="radio" class="form-check-input me-2" name="diasCarne" [value]="3" [(ngModel)]="formData.diasCarnePorSemana" required> 3 días (Flexitariano)</label>
+            <label class="radio-label"><input type="radio" class="form-check-input me-2" name="diasCarne" [value]="1" [(ngModel)]="formData.diasCarnePorSemana" required> 1 día</label>
+            <label class="radio-label"><input type="radio" class="form-check-input me-2" name="diasCarne" [value]="0" [(ngModel)]="formData.diasCarnePorSemana" required> Ninguno (Vegetariano/Vegano)</label>
           </div>
-          <div class="btn-nav-group">
-            <button type="button" class="btn btn-secondary" (click)="atras(3)">ATRÁS</button>
-            <button type="button" class="btn" (click)="siguiente(3)"
+          <div class="btn-nav-group mt-5">
+            <button type="button" class="btn btn-outline-secondary" (click)="atras(3)">ATRÁS</button>
+            <button type="button" class="btn btn-success text-white" (click)="siguiente(3)"
                     [disabled]="formData.diasCarnePorSemana == null">SIGUIENTE</button>
           </div>
         </div>
 
-        <div *ngIf="currentStep === 4">
-          <h2 class="fs-5 fw-bold mb-3">¿Qué cantidad de residuos se genera al día promedio en tu hogar?</h2>
-          <p class="fs-6 mb-4">Una bolsa pequeña de supermercado equivale a 5 litros.</p>
+        <div *ngIf="currentStep === 4" class="step-content">
+          <h2 class="fs-5 fw-bold mb-3">¿Qué cantidad de residuos se genera al día en tu hogar?</h2>
+          <p class="fs-6 mb-4 text-muted">Una bolsa pequeña de supermercado equivale a 5 litros.</p>
           <div class="input-group">
             <div>
-              <label for="bolsas5L">Cantidad de bolsas pequeñas (5 litros):</label>
-              <input type="number" id="bolsas5L" name="bolsas5L" placeholder="Ingrese número de bolsas" [(ngModel)]="formData.bolsas5L" min="0">
+              <label for="bolsas5L">Bolsas pequeñas (5 litros):</label>
+              <input type="number" id="bolsas5L" name="bolsas5L" placeholder="0" [(ngModel)]="formData.bolsas5L" min="0">
             </div>
             <div>
-              <label for="bolsas10L">Cantidad de bolsas medianas (10 litros):</label>
-              <input type="number" id="bolsas10L" name="bolsas10L" placeholder="Ingrese número de bolsas" [(ngModel)]="formData.bolsas10L" min="0">
+              <label for="bolsas10L">Bolsas medianas (10 litros):</label>
+              <input type="number" id="bolsas10L" name="bolsas10L" placeholder="0" [(ngModel)]="formData.bolsas10L" min="0">
             </div>
             <div>
-              <label for="bolsas20L">Cantidad de bolsas grandes (20 litros):</label>
-              <input type="number" id="bolsas20L" name="bolsas20L" placeholder="Ingrese número de bolsas" [(ngModel)]="formData.bolsas20L" min="0">
+              <label for="bolsas20L">Bolsas grandes (20 litros):</label>
+              <input type="number" id="bolsas20L" name="bolsas20L" placeholder="0" [(ngModel)]="formData.bolsas20L" min="0">
             </div>
           </div>
-          <div class="btn-nav-group">
-            <button type="button" class="btn btn-secondary" (click)="atras(4)">ATRÁS</button>
-            <button type="button" class="btn" (click)="siguiente(4)">SIGUIENTE</button>
+          <div class="btn-nav-group mt-5">
+            <button type="button" class="btn btn-outline-secondary" (click)="atras(4)">ATRÁS</button>
+            <button type="button" class="btn btn-success text-white" (click)="siguiente(4)">SIGUIENTE</button>
           </div>
         </div>
 
-        <div *ngIf="currentStep === 5">
-          <h2 class="fs-5 fw-bold mb-4">¿Qué tipo de residuos reciclas?</h2>
-          <div class="checkbox-group">
-            <label><input type="checkbox" class="form-check-input" name="vidrio" [(ngModel)]="reciclajeTipos.vidrio"> Vidrio</label>
-            <label><input type="checkbox" class="form-check-input" name="plastico" [(ngModel)]="reciclajeTipos.plastico"> Plástico</label>
-            <label><input type="checkbox" class="form-check-input" name="aluminio" [(ngModel)]="reciclajeTipos.aluminio"> Aluminio</label>
-            <label><input type="checkbox" class="form-check-input" name="organicos" [(ngModel)]="reciclajeTipos.organicos"> Residuos orgánicos</label>
-            <label><input type="checkbox" class="form-check-input" name="papel" [(ngModel)]="reciclajeTipos.papel"> Papel y cartones</label>
-            <label><input type="checkbox" class="form-check-input" name="ninguno" [(ngModel)]="reciclajeTipos.ninguno"> Ninguno de estos</label>
+        <div *ngIf="currentStep === 5" class="step-content">
+          <h2 class="fs-5 fw-bold mb-4">¿Qué tipo de residuos reciclas habitualmente?</h2>
+          <div class="checkbox-group d-grid gap-3" style="grid-template-columns: 1fr 1fr;">
+            <label class="checkbox-label"><input type="checkbox" class="form-check-input me-2" name="vidrio" [(ngModel)]="reciclajeTipos.vidrio"> Vidrio</label>
+            <label class="checkbox-label"><input type="checkbox" class="form-check-input me-2" name="plastico" [(ngModel)]="reciclajeTipos.plastico"> Plástico</label>
+            <label class="checkbox-label"><input type="checkbox" class="form-check-input me-2" name="aluminio" [(ngModel)]="reciclajeTipos.aluminio"> Aluminio / Latas</label>
+            <label class="checkbox-label"><input type="checkbox" class="form-check-input me-2" name="organicos" [(ngModel)]="reciclajeTipos.organicos"> Orgánicos (Compost)</label>
+            <label class="checkbox-label"><input type="checkbox" class="form-check-input me-2" name="papel" [(ngModel)]="reciclajeTipos.papel"> Papel y Cartón</label>
+            <label class="checkbox-label"><input type="checkbox" class="form-check-input me-2" name="ninguno" [(ngModel)]="reciclajeTipos.ninguno"> No reciclo</label>
           </div>
-          <div class="btn-nav-group">
-            <button type="button" class="btn btn-secondary" (click)="atras(5)">ATRÁS</button>
-            <button type="submit" class="btn btn-success">FINALIZAR</button>
+          <div class="btn-nav-group mt-5">
+            <button type="button" class="btn btn-outline-secondary" (click)="atras(5)">ATRÁS</button>
+            <button type="submit" class="btn btn-success text-white px-5">CALCULAR <i class="fas fa-calculator ms-2"></i></button>
           </div>
         </div>
 
-        <div *ngIf="currentStep === 6" class="content_result">
+        <div *ngIf="currentStep === 6" class="step-content">
 
-          <div *ngIf="isLoading; else showResults" class="text-center" style="padding: 100px 0;">
-            <h2 class="fs-3">Calculando resultados...</h2>
-            <div class="spinner-border text-success" role="status"><span class="visually-hidden">Loading...</span></div>
+          <div *ngIf="isLoading" class="text-center py-5">
+            <h2 class="fs-3 text-muted mb-4">Calculando tu impacto...</h2>
+            <div class="spinner-border text-success" style="width: 4rem; height: 4rem;" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </div>
 
-          <ng-template #showResults>
-            <div *ngIf="resultados">
-              <h2 class="title">RESULTADOS</h2>
-              <h3>TU HUELLA DE CARBONO ES:</h3>
+          <div *ngIf="!isLoading && resultados" class="result-container text-center animate-fade-in">
+            <h2 class="title text-secondary text-uppercase mb-1">Resultados</h2>
+            <h3 class="subtitle fs-4 mb-4">TU HUELLA DE CARBONO ANUAL ES:</h3>
 
-              <h2 class="text-center color-green fs-1 fw-bold my-4">
-                {{ resultados.totalKgCO2e | number:'1.2-2' }} kg CO2e
-                <span class="fs-5 text-dark">/ año</span>
-              </h2>
+            <div class="total-score my-4">
+              <h1 class="display-1 fw-bold text-success m-0">
+                {{ resultados.totalKgCO2e | number:'1.0-2' }}
+              </h1>
+              <span class="fs-4 text-dark fw-bold">kg CO2e / año</span>
+            </div>
 
-              <div class="container-canva" style="max-width: 300px; margin: 30px auto; position: relative; height:300px; width:300px">
-                <canvas id="myChart" #myChart></canvas>
+            <div class="chart-wrapper mx-auto my-4" style="max-width: 350px; height: 350px; position: relative;">
+              <canvas id="myChart" #myChart></canvas>
+            </div>
+
+            <div class="legend-grid d-grid gap-3 mt-4" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+              <div class="legend-item p-3 border rounded bg-light">
+                <span class="d-block text-secondary small fw-bold">TRANSPORTE</span>
+                <span class="d-block fs-5 fw-bold text-dark">{{ resultados.totalTransporteTon | number:'1.2-2' }} TON</span>
               </div>
-
-              <div class="legend">
-                <div class="legend-item">
-                  <span class="legend-title">TRANSPORTE</span>
-                  <span class="legend-value">{{ resultados.totalTransporteTon | number:'1.2-2' }} TON</span>
-                </div>
-                <div class="legend-item">
-                  <span class="legend-title">ENERGÍA</span>
-                  <span class="legend-value">{{ resultados.totalEnergiaTon | number:'1.2-2' }} TON</span>
-                </div>
-                <div class="legend-item">
-                  <span class="legend-title">ALIMENTACIÓN</span>
-                  <span class="legend-value">{{ resultados.totalAlimentacionTon | number:'1.2-2' }} TON</span>
-                </div>
-                <div class="legend-item">
-                  <span class="legend-title">RESIDUOS</span>
-                  <span class="legend-value">{{ resultados.totalResiduosTon | number:'1.2-2' }} TON</span>
-                </div>
+              <div class="legend-item p-3 border rounded bg-light">
+                <span class="d-block text-secondary small fw-bold">ENERGÍA</span>
+                <span class="d-block fs-5 fw-bold text-dark">{{ resultados.totalEnergiaTon | number:'1.2-2' }} TON</span>
               </div>
-
-              <div class="progress-container">
-                <p>Para compensar tu Huella de Carbono se debe plantar en el lapso de un año: 5 árboles</p>
-                <div class="progress-bar">
-                  <div class="progress" style="width: 70%;"></div>
-                </div>
+              <div class="legend-item p-3 border rounded bg-light">
+                <span class="d-block text-secondary small fw-bold">ALIMENTACIÓN</span>
+                <span class="d-block fs-5 fw-bold text-dark">{{ resultados.totalAlimentacionTon | number:'1.2-2' }} TON</span>
               </div>
-
-              <div class="d-flex justify-content-center mt-4">
-                <button type="button" class="btn" (click)="volverAlInicio()">VOLVER AL INICIO</button>
+              <div class="legend-item p-3 border rounded bg-light">
+                <span class="d-block text-secondary small fw-bold">RESIDUOS</span>
+                <span class="d-block fs-5 fw-bold text-dark">{{ resultados.totalResiduosTon | number:'1.2-2' }} TON</span>
               </div>
             </div>
-          </ng-template>
+
+            <div class="progress-section mt-5 p-4 bg-light rounded text-start">
+              <p class="mb-2 fw-bold"><i class="fas fa-tree text-success me-2"></i>Compensación sugerida:</p>
+              <p class="small text-muted mb-3">Para compensar tu huella, deberías plantar aproximadamente <strong>5 árboles</strong> este año.</p>
+              <div class="progress" style="height: 20px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">Tu Huella</div>
+              </div>
+            </div>
+
+            <div class="mt-5">
+              <button type="button" class="btn btn-dark btn-lg px-5 rounded-pill" (click)="volverAlInicio()">
+                VOLVER AL INICIO
+              </button>
+            </div>
+          </div>
         </div>
+
       </form>
     </div>
   </div>

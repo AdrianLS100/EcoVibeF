@@ -20,7 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
   standalone: true,
   imports: [
     CommonModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput,
-    MatButton, MatIcon, MatTabsModule, MatSelectModule
+    MatButton, MatIcon, MatTabsModule, MatSelectModule, RouterLink
   ],
   templateUrl: './register-institucion.html',
   styleUrls: ['./register-institucion.css']

@@ -10,6 +10,7 @@ import { LoginService } from '../../../services/login-service';
 import { Reporte } from '../../../models/reporte-model';
 import { Chart, registerables } from 'chart.js/auto';
 import {HeaderComponent} from '../../../components/header/header';
+import {SocialShareService} from '../../../services/social-share';
 
 @Component({
   selector: 'app-resultado',
@@ -25,6 +26,7 @@ export class ResultadoComponent implements OnInit {
   private reporteService = inject(ReporteService);
   private gamificacionService = inject(GamificacionService);
   private loginService = inject(LoginService);
+  private socialShareService = inject(SocialShareService);
 
   public reporte: Reporte | null = null;
   public isLoading = true;
@@ -127,6 +129,11 @@ export class ResultadoComponent implements OnInit {
         plugins: { legend: { display: false } }
       }
     });
+  }
+
+  compartirLogro(platform: string) {
+    const mensaje = `¡Acabo de reducir mi huella de carbono y gané ${this.puntosGanados} puntos en EcoVibe! 🌍✨`;
+    this.socialShareService.share(platform, mensaje);
   }
 
   goHome() {

@@ -21,7 +21,7 @@ import { HeaderComponent} from '../../components/header/header';
   imports: [
     CommonModule, ReactiveFormsModule, HeaderComponent,
     MatTabsModule, MatCardModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatIconModule, MatProgressSpinnerModule
+    MatButtonModule, MatIconModule, MatProgressSpinnerModule, RouterLink
   ],
   templateUrl: './profile.html',
   styleUrls: ['./profile.css']

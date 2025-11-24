@@ -1,50 +1,50 @@
 <app-header></app-header>
 
-<main class="container">
-  <h1 class="text-center color-green fs-2 fw-bold my-4">Registro de actividades diarias</h1>
+<main class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
 
-  <form class="form-container" (ngSubmit)="onSubmit()" #actividadForm="ngForm">
+      <div class="text-center mb-5">
+        <div class="mb-3">
+          <span class="badge bg-success p-3 rounded-circle">
+            <i class="fas {{ icono }} fs-2"></i>
+          </span>
+        </div>
 
-    <div class="form-section">
-      <h2 class="fs-3 text-center">Iniciemos tu registro</h2>
-
-      <label for="descripcion" class="fs-6 mb-2 mt-4">
-        1. Dale un nombre o descripción a tu registro (ej: "Día de oficina"):
-      </label>
-      <div class="input-group d-flex align-items-center gap-3">
-        <i class="fa-solid fa-pencil fs-1"></i>
-        <input
-          type="text"
-          id="descripcion"
-          name="descripcion"
-          class="form-control"
-          placeholder="Descripción (obligatorio)"
-          [(ngModel)]="formData.descripcion"
-          maxlength="255"
-          required>
+        <h2 class="text-green fw-bold">{{ titulo }}</h2>
+        <p class="text-secondary fs-5">{{ subtitulo }}</p>
       </div>
 
-      <label for="fecha" class="fs-6 mb-2 mt-4">
-        2. Selecciona la fecha para este registro:
-      </label>
-      <div class="input-group d-flex align-items-center gap-3">
-        <i class="fa-solid fa-calendar-day fs-1"></i>
-        <input
-          type="date"
-          id="fecha"
-          name="fecha"
-          class="form-control"
-          [(ngModel)]="formData.fecha"
-          [min]="minDate"  required>
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form (ngSubmit)="onSubmit()">
+
+            <div class="mb-4">
+              <label for="descripcion" class="form-label fw-bold text-secondary">Descripción de la actividad</label>
+              <input type="text" class="form-control form-control-lg" id="descripcion"
+                     [(ngModel)]="formData.descripcion" name="descripcion"
+                     placeholder="Ej: Viaje al trabajo, día de oficina..." required>
+            </div>
+
+            <div class="mb-4">
+              <label for="fecha" class="form-label fw-bold text-secondary">Fecha</label>
+              <input type="date" class="form-control form-control-lg" id="fecha"
+                     [(ngModel)]="formData.fecha" name="fecha"
+                     [max]="minDate" required>
+              <div class="form-text">No puedes registrar actividades futuras.</div>
+            </div>
+
+            <div class="d-grid gap-2 mt-5">
+              <button type="submit" class="btn btn-success btn-lg text-white fw-bold">
+                Iniciar Registro <i class="fas fa-arrow-right ms-2"></i>
+              </button>
+              <a routerLink="/home" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+
+          </form>
+        </div>
       </div>
 
     </div>
-
-    <div class="submit-button d-flex justify-content-end mt-4">
-      <button type="submit" class="btn btn-success" [disabled]="!actividadForm.valid">
-        <span>Iniciar</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </button>
-    </div>
-  </form>
+  </div>
 </main>

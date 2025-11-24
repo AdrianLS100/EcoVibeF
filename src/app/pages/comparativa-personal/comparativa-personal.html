@@ -1,0 +1,44 @@
+<app-header></app-header>
+
+<main class="container my-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold text-dark">Comparativa de Impacto</h1>
+    <p class="text-secondary">Mira cómo te posicionas frente a la comunidad EcoVibe.</p>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center p-5">
+    <div class="spinner-border text-primary"></div>
+  </div>
+
+  <div *ngIf="!isLoading" class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-lg border-0 p-4">
+
+        <div class="chart-container" style="position: relative; height:300px;">
+          <canvas #barCanvas></canvas>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="text-center">
+          <p class="mb-2">Tu huella actual es:</p>
+          <h2 class="display-5 fw-bold text-primary">{{ datos?.tuHuella | number:'1.0-0' }} kg</h2>
+
+          <div *ngIf="datos && datos.tuHuella < datos.promedioComunidad" class="alert alert-success mt-3">
+            <i class="fas fa-check-circle me-2"></i>
+            ¡Felicidades! Estás por debajo del promedio.
+          </div>
+
+          <div *ngIf="datos && datos.tuHuella > datos.promedioComunidad" class="alert alert-warning mt-3">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Estás por encima del promedio. ¡Revisa las recomendaciones!
+          </div>
+
+          <a routerLink="/recomendaciones" class="btn btn-outline-dark mt-3">
+            Ver cómo mejorar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

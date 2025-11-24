@@ -2,7 +2,8 @@
   <nav class="container-header navbar navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand fs-2 fw-bold text-green" routerLink="/home">EcoVibe</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
@@ -21,7 +22,17 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" routerLink="/ranking">Rankings</a>
+            <a class="nav-link" aria-current="page" [routerLink]="getRankingRoute()">Rankings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="/comparativa">Comparativa</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="/recursos">Recursos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="/quiz">
+              Juegos <i class="fas fa-gamepad ms-1"></i> </a>
           </li>
           <li class="nav-item position-relative d-flex align-items-center form-control--header__search">
             <div class="position-absolute">
@@ -32,53 +43,64 @@
         </ul>
 
         <div class="d-flex align-items-center gap-2">
-
-          <button *ngIf="!loginService.isLoggedIn()"
-                  type="button"
-                  class="d-block btn btn-success"
-                  routerLink="/login">
+          <button *ngIf="!loginService.isLoggedIn()" type="button" class="d-block btn btn-success" routerLink="/login">
             Iniciar sesión
           </button>
 
-          <div *ngIf="loginService.isLoggedIn()"
-               class="d-flex flex-column flex-lg-row align-items-center gap-4">
-
-            <a class="d-flex align-items-center gap-2 nav-link w-100" routerLink="/notificaciones">
-              <i class="fas fa-bell"></i>
-              <span class="fs-6 d-lg-none">Notificaciones</span>
-            </a>
-            <a class="d-flex align-items-center gap-2 nav-link w-100" routerLink="/tienda">
-              <i class="fas fa-dollar-sign"></i>
-              <span class="fs-6 d-lg-none">Tienda</span>
-            </a>
-
-            <!-- Menú de Perfil (Desktop) -->
+          <div *ngIf="loginService.isLoggedIn()" class="d-flex flex-column flex-lg-row align-items-center gap-4">
             <div class="nav-item dropdown d-none d-lg-block">
-              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-user"></i>
+              <a class="nav-link notification-bell" href="javascript:void(0)" role="button"
+                 (click)="toggleNotifications($event)">
+                <i class="fas fa-bell"></i>
+                <span *ngIf="unreadCount > 0" class="notification-badge">{{ unreadCount }}</span>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end shadow-lg mt-3">
-                <li><a class="dropdown-item" routerLink="/perfil">Perfil</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                  <!-- Llama a la función logout() de home.component.ts -->
-                  <a class="dropdown-item" href="javascript:void(0)" (click)="logout()">
-                    Cerrar sesión
+
+              <ul class="dropdown-menu dropdown-menu-end shadow-lg mt-3 p-0 notification-dropdown"
+                  [class.show]="showNotifications"
+                  (click)="$event.stopPropagation()">
+
+                <li class="dropdown-header d-flex justify-content-between align-items-center">
+                  <span>Notificaciones</span>
+                  <button type="button" class="btn-close small" aria-label="Close" (click)="showNotifications = false"></button>
+                </li>
+                <li><hr class="dropdown-divider m-0"></li>
+
+                <li *ngIf="isLoadingNotificaciones" class="text-center p-3">
+                  <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+                </li>
+
+                <li *ngIf="!isLoadingNotificaciones && notificaciones.length === 0" class="notification-item text-muted text-center p-3">
+                  No tienes notificaciones nuevas.
+                </li>
+
+                <li *ngFor="let notif of notificaciones">
+                  <a class="dropdown-item notification-item" [routerLink]="notif.linkRuta" (click)="showNotifications = false">
+                    <div class="d-flex flex-column">
+                      <span [class.fw-bold]="!notif.leido" style="white-space: normal;">{{ notif.mensaje }}</span>
+                      <small class="text-muted mt-1">{{ notif.fechaCreacion | date:'short' }}</small>
+                    </div>
                   </a>
                 </li>
+
+                <li><hr class="dropdown-divider m-0"></li>
+                <li><a class="dropdown-item text-center small text-primary" routerLink="/notificaciones" (click)="showNotifications = false">Ver todas</a></li>
               </ul>
             </div>
 
-            <div class="d-flex flex-column gap-3 d-lg-none w-100">
-              <a class="nav-link" href="#">
-                <i class="fas fa-user"></i>
-                <span class="fs-6">Perfil</span>
-              </a>
-              <button type="button" class="btn btn-sm btn-danger mb-2" (click)="logout()">
-                Cerrar sesión
-              </button>
-            </div>
+            <a class="d-flex align-items-center gap-2 nav-link w-100" routerLink="/tienda">
+              <i class="fas fa-dollar-sign fs-5"></i>
+            </a>
 
+            <div class="nav-item dropdown d-none d-lg-block">
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user fs-5"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow-lg mt-3">
+                <li><a class="dropdown-item" routerLink="/perfil">Mi Perfil</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="javascript:void(0)" (click)="logout()">Cerrar sesión</a></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

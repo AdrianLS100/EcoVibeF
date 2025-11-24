@@ -22,6 +22,9 @@ import { authGuard} from './security/auth-guard';
 import {DashboardFamiliarComponent} from './pages/dashboard-familiar/dashboard-familiar';
 import {RankingFamiliarComponent} from './pages/ranking/ranking-familiar/ranking-familiar';
 import {RegisterInstitucionComponent} from './pages/register-institucion/register-institucion';
+import {RecomendacionesComponent} from './pages/recomendaciones/recomendaciones';
+import {ComparativaPersonalComponent} from './pages/comparativa-personal/comparativa-personal';
+import {QuizComponent} from './pages/quiz/quiz';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -49,8 +52,11 @@ export const routes: Routes = [
   { path: 'ranking', component: RankingComponent, canActivate: [authGuard] },
   { path: 'ranking-familiar', component: RankingFamiliarComponent, canActivate: [authGuard] },
   { path: 'notificaciones', component: NotificacionesPageComponent, canActivate: [authGuard] },
+  { path: 'comparativa', component: ComparativaPersonalComponent, canActivate: [authGuard] },
+  { path: 'quiz', component: QuizComponent, canActivate: [authGuard] },
 
   { path: 'perfil', component: ProfileComponent, canActivate: [authGuard]},
+  { path: 'recomendaciones', component: RecomendacionesComponent, canActivate: [authGuard]},
 
 
   { path: '**', redirectTo: 'home' }
