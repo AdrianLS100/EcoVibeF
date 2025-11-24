@@ -78,6 +78,8 @@ export class CalculadoraPersonalComponent {
 
     this.calculadoraService.calcular(this.formData).subscribe({
       next: (resultadosCalculados) => {
+        console.log("Respuesta del Backend:", resultadosCalculados);
+
         this.resultados = resultadosCalculados;
         this.isLoading = false;
         this.cdr.detectChanges();
