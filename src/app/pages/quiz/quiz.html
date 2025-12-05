@@ -56,7 +56,7 @@
 
       <div class="mt-4" *ngIf="seleccionActual">
         <div *ngIf="respuestaCorrecta" class="alert alert-success py-2 mb-3">¡Correcto! +{{ preguntas[currentQuestionIndex].puntosOtorgados }} pts</div>
-        <div *ngIf="!respuestaCorrecta" class="alert alert-danger py-2 mb-3">¡Incorrecto!</div>
+        <div *ngIf="!respuestaCorrecta" class="alert alert-danger py-2 mb-3">¡Incorecto!</div>
 
         <button class="btn btn-dark px-5" (click)="siguientePregunta()">
           {{ currentQuestionIndex < preguntas.length - 1 ? 'Siguiente' : 'Ver Resultados' }}
