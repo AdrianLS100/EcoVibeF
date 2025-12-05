@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  frontend:
+    image: ecovibe-frontend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecovibe-frontend
+    ports:
+      - "4200:80"        # EXTERNO:4200 → INTERNO:80 (Nginx)
+    networks:
+      - my-network-name
+    restart: always
+
+networks:
+  my-network-name:
+    name: springcloud
+
